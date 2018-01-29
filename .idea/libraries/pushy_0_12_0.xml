@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="pushy-0.12.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/pushy-0.12.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/pushy-0.12.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>
