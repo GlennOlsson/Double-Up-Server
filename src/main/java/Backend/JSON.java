@@ -25,6 +25,7 @@ public class JSON {
 	public static final String CERT_PASS_KEY = "cert-pass";
 	public static final String APP_BUNDLE_KEY = "app-bundle";
 	public static final String TEST_TOKEN_KEY = "test-token";
+	public static final String MAIN_URL_KEY = "main-url";
 	
 	//Other
 	public static final String TOKEN_KEY = "Token";

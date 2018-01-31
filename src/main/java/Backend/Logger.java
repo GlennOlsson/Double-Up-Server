@@ -40,7 +40,7 @@ import java.util.Calendar;
 
 public class Logger {
 	
-	private static String path = "/var/www/Website-Pi/html/Double-Up/";
+	private static String path = "/var/www/Website-Pi/html/DoubleUp/";
 	private static String printFile = "Print.md";
 	private static String errorFile = "Errorlog.md";
 	
