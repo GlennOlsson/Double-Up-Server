@@ -46,6 +46,8 @@ public class NotificationClient {
 		final PushNotificationFuture<SimpleApnsPushNotification, PushNotificationResponse<SimpleApnsPushNotification>>
 				sendNotificationFuture = apnsClient.sendNotification(simpleNotification);
 		
+		sendNotificationFuture.await();
+		
 		//Checking transportation
 		final PushNotificationResponse<SimpleApnsPushNotification> pushNotificationResponse =
 				sendNotificationFuture.get();

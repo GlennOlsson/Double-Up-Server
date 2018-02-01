@@ -43,9 +43,9 @@ public class Test {
 		Constants.CERT_PATH = certPath;
 		Constants.APP_BUNDLE = appBundle;
 		
-		new HTTPListener();
+//		new HTTPListener();
 		
-//		new Test("hey");
+		new Test();
 	
 	}
 	
