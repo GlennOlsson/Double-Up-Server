@@ -4,13 +4,18 @@ import Backend.FileHandling;
 import Backend.JSON;
 import Game.Models.User;
 import com.google.gson.JsonObject;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.ProtocolVersion;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -24,7 +29,7 @@ public class HTTPListenerTest {
 	
 	private String mainURL;
 	
-	@Test
+	@Before
 	public void setUp() throws IOException{
 		JsonObject object = FileHandling.getContentOfFileAsJSON(FileHandling.File.Secret);
 		mainURL = object.get(JSON.MAIN_URL_KEY).getAsString();
@@ -214,6 +219,7 @@ public class HTTPListenerTest {
 			
 			HttpClient client = HttpClientBuilder.create().build();
 			HttpPost post = new HttpPost(url);
+			
 			
 			// add header
 			post.addHeader("Accept","application/json");

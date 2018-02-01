@@ -1,5 +1,6 @@
 package Spark;
 
+import APNs.API.Exception.CertNotSetException;
 import APNs.API.Notification.Notification;
 import APNs.API.Notification.NotificationClient;
 import Backend.FileHandling;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 import static Backend.JSON.*;
 
@@ -80,19 +82,8 @@ public class GameRequest {
 			responseJSON.addProperty(GAME_ID_KEY, thisGame.getID());
 			responseJSON.addProperty(OPPONENT_USERNAME_KEY, thisGame.getTurn());
 			
-			//Will try to send notification to opponent, if they have a notification token
-			String notificationToken = opponentUser.getNotificationToken();
-			if(notificationToken != null && notificationToken.length() > 0){
-				NotificationClient client = new NotificationClient();
-				
-				Notification newGameNotification = new Notification(notificationToken);
-				newGameNotification.setBody(thisUser.getUsername() + " has sent you " + startAmount + "!");
-				newGameNotification.setBadgeNumber(1);
-				
-				client.sendPushNotification(newGameNotification);
-				
-				Logger.print("Sent notification to " + opponentUser.getUsername());
-			}
+			String notificationString = thisUser.getUsername() + " has sent you " + startAmount + "!";
+			sendNotification(opponentUser, notificationString);
 			
 			response.status(200);
 			response.body(responseJSON.toString());
@@ -135,6 +126,8 @@ public class GameRequest {
 			}
 			//Current game can't be null now
 			ArrayList<User> usersInGame = currentGame.getUsersList();
+			
+			User thisUser = new User(token);
 			User otherUser = ! usersInGame.get(0).getUserToken().equals(token) ? usersInGame.get(0) : usersInGame.get(1);
 			
 			if(!usersInGame.get(0).getUserToken().equals(token) && !usersInGame.get(1).getUserToken().equals(token)) {
@@ -179,13 +172,18 @@ public class GameRequest {
 				currentGame.setTurn(otherUser.getUserToken());
 				currentGame.setCurrentAmount(currentAmount);
 				
+				String notificationString = thisUser.getUsername() + " has sent you " + currentAmount + "!";
+				sendNotification(otherUser, notificationString);
+				
 				GamesFile.addGame(currentGame);
 			}
 			else {
 				//Game is over
 				GamesFile.addGame(currentGame);
-				User thisUser = new User(token);
 				thisUser.addToBankAmount(currentGame.getCurrentAmount());
+				
+				String notificationString = thisUser.getUsername() + " has decided to keep the money";
+				sendNotification(otherUser, notificationString);
 				
 				UsersFile.addUser(thisUser);
 			}
@@ -290,6 +288,27 @@ public class GameRequest {
 		}
 		
 		return response;
+	}
+	
+	private static void sendNotification(User userToSend, String content)
+			throws CertNotSetException, IOException, InterruptedException, ExecutionException{
+		
+		//Will try to send notification to opponent, if they have a notification token
+		String notificationToken = userToSend.getNotificationToken();
+		if(notificationToken != null && notificationToken.length() > 0){
+			NotificationClient client = new NotificationClient();
+			
+			Notification newGameNotification = new Notification(notificationToken);
+			newGameNotification.setBody(content);
+			newGameNotification.setBadgeNumber(1);
+			
+			boolean accepted = client.sendPushNotification(newGameNotification);
+			
+			Logger.print("Sent notification to " + userToSend.getUsername() + " ? " + accepted);
+		}
+		else{
+			Logger.print(userToSend.getUsername() + " has not accepted notifications");
+		}
 	}
 	
 	private static User getRandomUser() throws IOException{
