@@ -104,6 +104,8 @@ public class Test {
 		final PushNotificationFuture<SimpleApnsPushNotification, PushNotificationResponse<SimpleApnsPushNotification>>
 				sendNotificationFuture = apnsClient.sendNotification(pushNotification);
 		
+		sendNotificationFuture.await();
+		
 		//Handling transportation
 		try {
 			final PushNotificationResponse<SimpleApnsPushNotification> pushNotificationResponse =
