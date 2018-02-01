@@ -31,9 +31,4 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'
 
-    // https://bintray.com/akhikhl/maven/gretty/view
-    compile 'org.akhikhl.gretty:gretty:2.0.0'
-
-    // https://github.com/google/conscrypt
-    compile 'org.conscrypt:conscrypt-jdk-uber:1.1.0-SNAPSHOT'
 }
