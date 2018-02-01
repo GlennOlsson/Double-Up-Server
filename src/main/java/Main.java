@@ -1,7 +1,9 @@
 import APNs.API.Notification.Constants;
 import Backend.FileHandling;
+import Backend.Logger;
 import Spark.HTTPListener;
 import com.google.gson.JsonObject;
+import sun.rmi.runtime.Log;
 
 import java.io.IOException;
 
@@ -19,6 +21,8 @@ public class Main {
 		Constants.CERT_PASS = certPassword;
 		Constants.CERT_PATH = certPath;
 		Constants.APP_BUNDLE = appBundle;
+		
+		Logger.print("      Starting - " + Logger.getDate());
 		
 	    new HTTPListener();
 	}
