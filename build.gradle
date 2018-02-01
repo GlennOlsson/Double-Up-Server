@@ -13,6 +13,7 @@ repositories {
     mavenCentral()
 }
 
+
 mainClassName = 'Test'
 
 dependencies {
@@ -32,4 +33,7 @@ dependencies {
 
     // https://bintray.com/akhikhl/maven/gretty/view
     compile 'org.akhikhl.gretty:gretty:2.0.0'
+
+    // https://github.com/google/conscrypt
+    compile 'org.conscrypt:conscrypt-jdk-uber:1.1.0-SNAPSHOT'
 }
