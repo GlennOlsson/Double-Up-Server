@@ -292,22 +292,28 @@ public class GameRequest {
 	
 	private static void sendNotification(User userToSend, String content)
 			throws CertNotSetException, IOException, InterruptedException, ExecutionException{
-		
-		//Will try to send notification to opponent, if they have a notification token
-		String notificationToken = userToSend.getNotificationToken();
-		if(notificationToken != null && notificationToken.length() > 0){
-			NotificationClient client = new NotificationClient();
-			
-			Notification newGameNotification = new Notification(notificationToken);
-			newGameNotification.setBody(content);
-			newGameNotification.setBadgeNumber(1);
-			
-			boolean accepted = client.sendPushNotification(newGameNotification);
-			
-			Logger.print("Sent notification to " + userToSend.getUsername() + " ? " + accepted);
+		try{
+			//Will try to send notification to opponent, if they have a notification token
+			String notificationToken = userToSend.getNotificationToken();
+			if(notificationToken != null && notificationToken.length() > 0){
+				NotificationClient client = new NotificationClient();
+				
+				Notification newGameNotification = new Notification(notificationToken);
+				newGameNotification.setBody(content);
+				newGameNotification.setBadgeNumber(1);
+				
+				
+				
+				boolean accepted = client.sendPushNotification(newGameNotification);
+				
+				Logger.print("Sent notification to " + userToSend.getUsername() + " ? " + accepted);
+			}
+			else{
+				Logger.print(userToSend.getUsername() + " has not accepted notifications");
+			}
 		}
-		else{
-			Logger.print(userToSend.getUsername() + " has not accepted notifications");
+		catch (Exception e){
+			Logger.print("Could not send Notification");
 		}
 	}
 	
