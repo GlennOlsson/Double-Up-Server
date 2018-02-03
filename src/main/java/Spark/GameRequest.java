@@ -277,6 +277,7 @@ public class GameRequest {
 				gameObject.addProperty(OPPONENT_USERNAME_KEY, otherUser.getUsername());
 				
 				gameObject.addProperty(IS_OVER_KEY, game.isOver());
+				gameObject.addProperty(CURRENT_AMOUNT_KEY, game.getCurrentAmount());
 				
 				gamesArray.add(gameObject);
 			}
