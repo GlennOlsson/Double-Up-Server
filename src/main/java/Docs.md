@@ -78,8 +78,16 @@
 ### GET /games/:userToken
 ```json
 [
-  "GAMEID1",
-  "GAMEID2"
+  {
+  "GameID": "GAME1",
+  "OpponentUsername": "OPPONENT1",
+  "IsOver": false
+  },
+  {
+    "GameID": "GAME2",
+    "OpponentUsername": "OPPONENT2",
+    "IsOver": true
+  }
 ]
 ```
 

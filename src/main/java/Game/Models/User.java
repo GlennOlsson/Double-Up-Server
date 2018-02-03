@@ -6,6 +6,7 @@ import Backend.Logger;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.sun.xml.internal.bind.v2.model.core.ID;
 
 import static Backend.JSON.*;
 import static Game.Models.Token.*;
@@ -200,6 +201,10 @@ public class User {
 		}
 		
 		return hasFound && usersObject.has(token);
+	}
+	
+	public boolean equals(User otherUser) {
+		return userToken.equals(otherUser.getUserToken());
 	}
 	
 }

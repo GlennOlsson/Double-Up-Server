@@ -269,7 +269,16 @@ public class GameRequest {
 			
 			JsonArray gamesArray = new JsonArray();
 			for(Game game : gamesList){
-				gamesArray.add(game.getID());
+				JsonObject gameObject = new JsonObject();
+				gameObject.addProperty(GAME_ID_KEY, game.getID());
+				
+				ArrayList<User> users = game.getUsersList();
+				User otherUser = users.get(0).equals(thisUser) ? users.get(0) : users.get(1);
+				gameObject.addProperty(OPPONENT_USERNAME_KEY, otherUser.getUsername());
+				
+				gameObject.addProperty(IS_OVER_KEY, game.isOver());
+				
+				gamesArray.add(gameObject);
 			}
 			
 			response.body(JSON.beautifyJSON(gamesArray));

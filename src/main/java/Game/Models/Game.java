@@ -13,7 +13,7 @@ import static Game.Models.Token.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Game {
+public class Game{
 	
 	private ArrayList<User> usersList;
 	
@@ -163,5 +163,9 @@ public class Game {
 		JsonElement idString = JSON.parseStringToJSONElement(id);
 		
 		return idsArray.contains(idString) && gamesObject.has(id);
+	}
+	
+	public boolean equals(Game otherGame) {
+		return ID.equals(otherGame.getID());
 	}
 }
