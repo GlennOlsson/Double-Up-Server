@@ -85,7 +85,7 @@
 
 # Status codes
 
-## /newUsername
+## /newUser
 ### 200
 New user generation was successful
 
