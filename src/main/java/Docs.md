@@ -81,12 +81,16 @@
   {
   "GameID": "GAME1",
   "OpponentUsername": "OPPONENT1",
-  "IsOver": false
+  "IsOver": false,
+  "CurrentAmount": 20,
+  "Turn": true
   },
   {
     "GameID": "GAME2",
     "OpponentUsername": "OPPONENT2",
-    "IsOver": true
+    "IsOver": true,
+    "CurrentAmount": 130,
+    "Turn": false
   }
 ]
 ```

@@ -83,10 +83,6 @@ public class Game{
 		return ID;
 	}
 	
-	public void setID(String ID) {
-		this.ID = ID;
-	}
-	
 	public ArrayList<User> getUsersList() {
 		usersList = new ArrayList<>();
 		

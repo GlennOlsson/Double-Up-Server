@@ -278,6 +278,7 @@ public class GameRequest {
 				
 				gameObject.addProperty(IS_OVER_KEY, game.isOver());
 				gameObject.addProperty(CURRENT_AMOUNT_KEY, game.getCurrentAmount());
+				gameObject.addProperty(TURN_KEY, game.getTurn().equals(thisUser.getUserToken()));
 				
 				gamesArray.add(gameObject);
 			}
