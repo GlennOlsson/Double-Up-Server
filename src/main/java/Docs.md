@@ -127,7 +127,7 @@ General exception on server
 ### 501
 IOException on server
 
-## /gamePlayed
+## /playGame
 ### 200
 Play was successful
 
