@@ -169,6 +169,15 @@ public class GameRequest {
 					
 					return response;
 				}
+				if(thisUser.getBankAmount() < 2 * currentAmount){
+					response.status(407);
+					response.body(Integer.toString(response.status()));
+					
+					return response;
+				}
+				
+				thisUser.addToBankAmount(-currentGame.getCurrentAmount());
+				
 				currentGame.setTurn(otherUser.getUserToken());
 				currentGame.setCurrentAmount(currentAmount);
 				

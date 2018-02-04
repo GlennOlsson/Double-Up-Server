@@ -158,6 +158,9 @@ Did not double, cannot accept
 ### 406
 Game is already over
 
+### 407
+User does not have enough founds
+
 ### 500
 General exception on server
 
