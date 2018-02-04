@@ -273,7 +273,7 @@ public class GameRequest {
 				gameObject.addProperty(GAME_ID_KEY, game.getID());
 				
 				ArrayList<User> users = game.getUsersList();
-				User otherUser = users.get(0).equals(thisUser) ? users.get(0) : users.get(1);
+				User otherUser = users.get(0).equals(thisUser) ? users.get(1) : users.get(0);
 				gameObject.addProperty(OPPONENT_USERNAME_KEY, otherUser.getUsername());
 				
 				gameObject.addProperty(IS_OVER_KEY, game.isOver());
