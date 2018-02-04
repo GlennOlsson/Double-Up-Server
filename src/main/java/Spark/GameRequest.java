@@ -241,12 +241,12 @@ public class GameRequest {
 			
 		}
 		catch (IOException e){
-			Logger.logError(e, "IOException in playOnGame", "/gameInfo");
+			Logger.logError(e, "IOException in gameInfo", "/gameInfo");
 			response.status(501);
 			response.body(Integer.toString(response.status()));
 		}
 		catch (Exception e){
-			Logger.logError(e, "General exception in playOnGame", "/gameInfo");
+			Logger.logError(e, "General exception in gameInfo", "/gameInfo");
 			response.status(500);
 			response.body(Integer.toString(response.status()));
 		}
@@ -288,12 +288,12 @@ public class GameRequest {
 			
 		}
 		catch (IOException e){
-			Logger.logError(e, "IOException in playOnGame", "/gameInfo");
+			Logger.logError(e, "IOException in /games/:token", "/games/:token");
 			response.status(501);
 			response.body(Integer.toString(response.status()));
 		}
 		catch (Exception e){
-			Logger.logError(e, "General exception in playOnGame", "/gameInfo");
+			Logger.logError(e, "General exception in /games/:token", "/games/:token");
 			response.status(500);
 			response.body(Integer.toString(response.status()));
 		}
