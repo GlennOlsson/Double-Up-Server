@@ -99,7 +99,7 @@
 ```json
 {
   "Username": "USERNAME",
-  "BankAmount": "BANK_AMOUNT"
+  "BankAmount": 100
 }
 ```
 
