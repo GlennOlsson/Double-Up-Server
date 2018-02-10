@@ -137,4 +137,37 @@ public class UserRequest {
 		
 		return response;
 	}
+	
+	public static Response getUserInfo(Request request, Response response){
+		try{
+			String userToken = request.params(":token");
+			if(! User.doesUserExistWithToken(userToken)){
+				response.status(401);
+				response.body(Integer.toString(response.status()));
+				return response;
+			}
+			User thisUser = new User(userToken);
+			
+			JsonObject responseObject = new JsonObject();
+			responseObject.addProperty(USERNAME_KEY, thisUser.getUsername());
+			responseObject.addProperty(BANK_KEY, thisUser.getBankAmount());
+			
+			response.status(200);
+			response.body(JSON.beautifyJSON(responseObject));
+			
+		}
+		catch (IOException e){
+			e.printStackTrace();
+			response.status(501);
+			response.body(Integer.toString(response.status()));
+		}
+		catch (Exception e){
+			e.printStackTrace();
+			response.status(500);
+			response.body(Integer.toString(response.status()));
+		}
+		
+		return response;
+	}
+	
 }

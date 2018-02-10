@@ -111,6 +111,14 @@ public class HTTPListener {
 			return response.body();
 		});
 		
+		//Return info on a user
+		get("/userInfo/:token", ((request, response) -> {
+			Logger.print("/userInfo/:token : " + request.params());
+			response = UserRequest.getUserInfo(request, response);
+			
+			return response.body();
+		}));
+		
 		/*
 		{
 			"Token": "TOKEN",

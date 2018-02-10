@@ -95,6 +95,14 @@
 ]
 ```
 
+### GET /userInfo/:token
+```json
+{
+  "Username": "USERNAME",
+  "BankAmount": "BANK_AMOUNT"
+}
+```
+
 # Status codes
 
 ## /newUser
@@ -196,6 +204,19 @@ IOException on server
 ## /games/:token
 ### 200
 Games info has successfully been returned
+
+### 401
+No user with that token
+
+### 500
+General exception on server
+
+### 501
+IOException on server
+
+## /userInfo/:token
+### 200
+User info was successfully returned
 
 ### 401
 No user with that token
