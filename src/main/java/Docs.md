@@ -57,7 +57,7 @@
 ### POST /newGame
 ```json
 {
-   "OtherUsername" : "Username",
+   "OpponentUsername" : "Username",
    "GameID": "GAME_ID"
 }
 ```
