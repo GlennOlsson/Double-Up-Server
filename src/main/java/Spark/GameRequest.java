@@ -80,7 +80,7 @@ public class GameRequest {
 			
 			JsonObject responseJSON = new JsonObject();
 			responseJSON.addProperty(GAME_ID_KEY, thisGame.getID());
-			responseJSON.addProperty(OPPONENT_USERNAME_KEY, thisGame.getTurn());
+			responseJSON.addProperty(OPPONENT_USERNAME_KEY, opponentUser.getUsername());
 			
 			String notificationString = thisUser.getUsername() + " has sent you " + startAmount + "!";
 			sendNotification(opponentUser, notificationString);

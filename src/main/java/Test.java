@@ -88,9 +88,12 @@ public class Test {
 
 			payloadBuilder.setAlertTitle("SUHH?!");
 
-			payloadBuilder.setAlertSubtitle("SUBB");
+			payloadBuilder.setAlertSubtitle("Cunt");
 
 			payloadBuilder.setSoundFileName("Popcorn.aiff");
+			
+			payloadBuilder.setActionButtonLabel("Hey");
+			payloadBuilder.setShowActionButton(true);
 			
 			payloadBuilder.setBadgeNumber(3);
 			
