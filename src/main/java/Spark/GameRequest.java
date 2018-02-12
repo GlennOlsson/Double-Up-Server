@@ -184,6 +184,7 @@ public class GameRequest {
 				String notificationString = thisUser.getUsername() + " has sent you " + currentAmount + "!";
 				sendNotification(otherUser, notificationString);
 				
+				UsersFile.addUser(thisUser);
 				GamesFile.addGame(currentGame);
 			}
 			else {
