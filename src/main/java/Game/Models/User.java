@@ -67,6 +67,10 @@ public class User {
 		//Not accessible
 	}
 	
+	public JsonArray getGamesAsJSONArray(){
+		return gamesArray;
+	}
+	
 	public String getUsername() {
 		return username;
 	}

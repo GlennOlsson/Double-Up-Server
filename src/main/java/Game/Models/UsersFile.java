@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 
 import java.io.IOException;
 
+import static Backend.JSON.TOKEN_KEY;
 import static Backend.JSON.USERS_LIST_KEY;
 import static Backend.JSON.USER_TOKEN_LIST_KEY;
 
@@ -35,6 +36,12 @@ public class UsersFile {
 		User user = new User(userToken);
 		user.addGame(gameID);
 		addUser(user);
+	}
+	
+	public static JsonArray getAllUserIDs() throws IOException{
+		JsonObject usersFile = FileHandling.getContentOfFileAsJSON(FileHandling.File.Users);
+		JsonArray usersIDsJSONArray = usersFile.getAsJsonArray(USER_TOKEN_LIST_KEY);
+		return usersIDsJSONArray;
 	}
 	
 }

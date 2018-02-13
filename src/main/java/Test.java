@@ -6,6 +6,7 @@ import Backend.Logger;
 import Game.Models.Game;
 import Game.Models.Token;
 import Game.Models.User;
+import Game.Models.UsersFile;
 import Spark.HTTPListener;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
@@ -44,8 +45,9 @@ public class Test {
 		Constants.APP_BUNDLE = appBundle;
 		
 //		new HTTPListener();
+
 		
-		new Test();
+//		new Test();
 	
 	}
 	
@@ -55,7 +57,7 @@ public class Test {
 			
 			Notification not1 = new Notification(testToken);
 			for (int i = 0; i < 1; i++) {
-				not1.setBody("Ur th g8est " + i);
+				not1.setBody("Sup bitch?");
 				not1.setSoundPath("none.aiff");
 				not1.setBadgeNumber(3);
 				
@@ -84,7 +86,7 @@ public class Test {
 		{
 			final ApnsPayloadBuilder payloadBuilder = new ApnsPayloadBuilder();
 
-			payloadBuilder.setAlertBody("Hello, world! \\U270c");
+			payloadBuilder.setAlertBody("Sup, bitch?");
 
 			payloadBuilder.setAlertTitle("SUHH?!");
 
