@@ -47,7 +47,7 @@ public class Test {
 //		new HTTPListener();
 
 		
-//		new Test();
+		new Test();
 	
 	}
 	
@@ -88,8 +88,6 @@ public class Test {
 
 			payloadBuilder.setAlertBody("Sup, bitch?");
 
-			payloadBuilder.setAlertTitle("SUHH?!");
-
 			payloadBuilder.setAlertSubtitle("Cunt");
 
 			payloadBuilder.setSoundFileName("Popcorn.aiff");
@@ -100,7 +98,7 @@ public class Test {
 			payloadBuilder.setBadgeNumber(3);
 			
 			final String payload = payloadBuilder.buildWithDefaultMaximumLength();
-			final String token = TokenUtil.sanitizeTokenString(testToken);
+			final String token = TokenUtil.sanitizeTokenString("FAA9BD9A05FAEB4220D07A434D4A27D2BD7E639C36983099DA789C5928819D4F");
 			
 			pushNotification = new SimpleApnsPushNotification(token, appBundle, payload);
 		}

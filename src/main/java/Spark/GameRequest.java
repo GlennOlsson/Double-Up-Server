@@ -78,8 +78,12 @@ public class GameRequest {
 			
 			GamesFile.addGame(thisGame);
 			
+			thisUser.addGame(thisGame.getID());
 			thisUser.addToBankAmount(-startAmount);
 			UsersFile.addUser(thisUser);
+			
+			opponentUser.addGame(thisGame.getID());
+			UsersFile.addUser(opponentUser);
 			
 			JsonObject responseJSON = new JsonObject();
 			responseJSON.addProperty(GAME_ID_KEY, thisGame.getID());
