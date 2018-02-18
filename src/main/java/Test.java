@@ -77,7 +77,7 @@ public class Test {
 		
 		
 		final ApnsClient apnsClient = new ApnsClientBuilder()
-				.setApnsServer(ApnsClientBuilder.DEVELOPMENT_APNS_HOST)
+				.setApnsServer(ApnsClientBuilder.PRODUCTION_APNS_HOST)
 				.setClientCredentials(new File(certPath), certPassword)
 				.build();
 		
@@ -86,9 +86,9 @@ public class Test {
 		{
 			final ApnsPayloadBuilder payloadBuilder = new ApnsPayloadBuilder();
 
-			payloadBuilder.setAlertBody("Sup, bitch?");
+			payloadBuilder.setAlertBody("\uD83D\uDE0F");
 
-			payloadBuilder.setAlertSubtitle("Cunt");
+			payloadBuilder.setAlertTitle("God Morgon!");
 
 			payloadBuilder.setSoundFileName("Popcorn.aiff");
 			
@@ -98,7 +98,7 @@ public class Test {
 			payloadBuilder.setBadgeNumber(3);
 			
 			final String payload = payloadBuilder.buildWithDefaultMaximumLength();
-			final String token = TokenUtil.sanitizeTokenString("FAA9BD9A05FAEB4220D07A434D4A27D2BD7E639C36983099DA789C5928819D4F");
+			final String token = TokenUtil.sanitizeTokenString(testToken);
 			
 			pushNotification = new SimpleApnsPushNotification(token, appBundle, payload);
 		}

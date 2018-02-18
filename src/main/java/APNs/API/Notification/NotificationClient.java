@@ -29,7 +29,7 @@ public class NotificationClient {
 			throw new CertNotSetException();
 		}
 			apnsClient = new ApnsClientBuilder()
-					.setApnsServer(ApnsClientBuilder.DEVELOPMENT_APNS_HOST)
+					.setApnsServer(ApnsClientBuilder.PRODUCTION_APNS_HOST)
 					.setClientCredentials(new File(certPath), certPassword)
 					.build();
 	}
