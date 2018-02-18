@@ -31,4 +31,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'
 
+    // https://mvnrepository.com/artifact/org.mortbay.jetty.alpn/jetty-alpn-agent
+    compile group: 'org.mortbay.jetty.alpn', name: 'jetty-alpn-agent', version: '2.0.0'
+
 }

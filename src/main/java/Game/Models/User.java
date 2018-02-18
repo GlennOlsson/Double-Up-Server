@@ -112,6 +112,7 @@ public class User {
 		catch (Exception e){
 			Logger.logError(e, "in getGamesList", "Probable cause is that there is no game with said ID. (" + gameID + ")");
 		}
+		
 		return gamesList;
 	}
 	
