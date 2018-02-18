@@ -100,16 +100,17 @@ public class User {
 	}
 	
 	public ArrayList<Game> getGamesList() {
+		String gameID = "";
 		try{
 			gamesList = new ArrayList<Game>();
 			
 			for(JsonElement jsonElement : gamesArray){
-				String gameID = jsonElement.getAsString();
+				gameID = jsonElement.getAsString();
 				gamesList.add(new Game(gameID));
 			}
 		}
 		catch (Exception e){
-			Logger.logError(e, "in getGamesList", "Probable cause is that there is no game with said ID");
+			Logger.logError(e, "in getGamesList", "Probable cause is that there is no game with said ID. (" + gameID + ")");
 		}
 		return gamesList;
 	}
