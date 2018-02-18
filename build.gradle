@@ -15,9 +15,8 @@ repositories {
 
 mainClassName = 'Main'
 
-bootRun {
-    jvmArgs = ["-javaagent/p:/home/tau/DoubleUpServer/Double-Up-Server/jetty-alpn-agent-2.0.0.jar"]
-}
+jvmArgs = ["-javaagent:/home/tau/DoubleUpServer/Double-Up-Server/jetty-alpn-agent-2.0.0.jar"]
+
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
