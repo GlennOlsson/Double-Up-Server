@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.mortbay.jetty.alpn:jetty-alpn-agent:2.0.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mortbay.jetty.alpn/jetty-alpn-agent/2.0.0/f8ee61c0400afb465f1e095690662f9640d96db6/jetty-alpn-agent-2.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mortbay.jetty.alpn/jetty-alpn-agent/2.0.0/9ecccd3e646eb91ece6676e94ca6a7f6d565da55/jetty-alpn-agent-2.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
