@@ -33,4 +33,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.mortbay.jetty.alpn/jetty-alpn-agent
     compile group: 'org.mortbay.jetty.alpn', name: 'jetty-alpn-agent', version: '2.0.0'
 
+    // https://mvnrepository.com/artifact/org.mortbay.jetty.alpn/alpn-boot
+    testCompile group: 'org.mortbay.jetty.alpn', name: 'alpn-boot', version: '8.1.12.v20180117'
+
 }
