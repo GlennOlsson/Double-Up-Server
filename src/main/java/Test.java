@@ -45,21 +45,19 @@ public class Test {
 		Constants.APP_BUNDLE = appBundle;
 		
 //		new HTTPListener();
-
 		
-		new Test();
-	
+		new Test("");
 	}
 	
 	public Test(String hey){
 		try{
 			NotificationClient client = new NotificationClient();
 			
-			Notification not1 = new Notification(testToken);
+			Notification not1 = new Notification("");
 			for (int i = 0; i < 1; i++) {
 				not1.setBody("Sup bitch?");
 				not1.setSoundPath("none.aiff");
-				not1.setBadgeNumber(3);
+				not1.setBadgeNumber(69);
 				
 				System.out.println(client.sendPushNotification(not1));
 			}
@@ -73,9 +71,6 @@ public class Test {
 	}
 	
 	public Test() throws Exception{
-		
-		
-		
 		final ApnsClient apnsClient = new ApnsClientBuilder()
 				.setApnsServer(ApnsClientBuilder.PRODUCTION_APNS_HOST)
 				.setClientCredentials(new File(certPath), certPassword)
@@ -85,10 +80,10 @@ public class Test {
 		final SimpleApnsPushNotification pushNotification;
 		{
 			final ApnsPayloadBuilder payloadBuilder = new ApnsPayloadBuilder();
-
-			payloadBuilder.setAlertBody("\uD83D\uDE0F");
-
-			payloadBuilder.setAlertTitle("God Morgon!");
+			
+			payloadBuilder.setAlertTitle("Pinsamt att missa programmeringen, hörrödu!");
+			
+			payloadBuilder.setAlertBody("\uD83D\uDE21");
 
 			payloadBuilder.setSoundFileName("Popcorn.aiff");
 			
