@@ -1,4 +1,3 @@
-import APNs.API.Exception.CertNotSetException;
 import APNs.API.Notification.Constants;
 import APNs.API.Notification.Notification;
 import APNs.API.Notification.NotificationClient;
@@ -6,10 +5,8 @@ import Backend.FileHandling;
 import Backend.Logger;
 import Spark.HTTPListener;
 import com.google.gson.JsonObject;
-import com.sun.tools.corba.se.idl.constExpr.Not;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 import static Backend.JSON.*;
 
@@ -18,6 +15,8 @@ public class Main {
 	private static String certPath;
 	private static String testToken;
 	private static String appBundle;
+	
+	public static NotificationClient notificationClient;
 	
 	public static void main(String[] args) throws IOException{
 		initialise();
@@ -29,6 +28,8 @@ public class Main {
 		Logger.print("      Starting - " + Logger.getDate());
 		
 		new HTTPListener();
+		
+		
 		
 		//Trying to send notification to developer that app server has started
 		try{
