@@ -1,6 +1,7 @@
 package Spark;
 
 import APNs.API.Exception.CertNotSetException;
+import APNs.API.Notification.Constants;
 import APNs.API.Notification.Notification;
 import APNs.API.Notification.NotificationClient;
 import Backend.FileHandling;
@@ -325,15 +326,12 @@ public class GameRequest {
 			//Will try to send notification to opponent, if they have a notification token
 			String notificationToken = userToSend.getNotificationToken();
 			if(notificationToken != null && notificationToken.length() > 0){
-				NotificationClient client = new NotificationClient();
 				
 				Notification newGameNotification = new Notification(notificationToken);
 				newGameNotification.setBody(content);
 				newGameNotification.setBadgeNumber(1);
 				
-				
-				
-				boolean accepted = client.sendPushNotification(newGameNotification);
+				boolean accepted = Constants.notificationClient.sendPushNotification(newGameNotification);
 				
 				Logger.print("Sent notification to " + userToSend.getUsername() + " ? " + accepted);
 			}

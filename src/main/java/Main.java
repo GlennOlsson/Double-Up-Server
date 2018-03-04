@@ -1,3 +1,4 @@
+import APNs.API.Exception.CertNotSetException;
 import APNs.API.Notification.Constants;
 import APNs.API.Notification.Notification;
 import APNs.API.Notification.NotificationClient;
@@ -16,9 +17,7 @@ public class Main {
 	private static String testToken;
 	private static String appBundle;
 	
-	public static NotificationClient notificationClient;
-	
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException, CertNotSetException{
 		initialise();
 		
 		Constants.CERT_PASS = certPassword;
@@ -29,16 +28,19 @@ public class Main {
 		
 		new HTTPListener();
 		
-		
-		
+		try{
+			Constants.notificationClient = new NotificationClient();
+		}
+		catch (Exception e){
+			Logger.logError(e, "Could not create a notification client", "General exception");
+		}
 		//Trying to send notification to developer that app server has started
 		try{
-			NotificationClient client = new NotificationClient();
 			Notification notification = new Notification(testToken);
 			notification.setTitle("Server is up and running again!");
 			notification.setBody("The reset was a success");
 			
-			client.sendPushNotification(notification);
+			Constants.notificationClient.sendPushNotification(notification);
 		}
 		catch (Exception e){
 			Logger.logError(e, "Could not send notifiation to Dev", "Unknown reason");
