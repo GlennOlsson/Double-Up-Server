@@ -6,6 +6,9 @@ import Backend.Logger;
 import Game.Models.User;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
+import spark.Request;
+import spark.Response;
+import spark.Route;
 
 import java.io.IOException;
 
@@ -28,6 +31,7 @@ public class HTTPListener {
 			Logger.print("/newUser : " + request.body());
 			response = UserRequest.createNewUser(request, response);
 			
+			Logger.print("Replying to /newUser with code: " + response.status() + ", message: " + response.body());
 			return response.body();
 		});
 		
@@ -43,6 +47,7 @@ public class HTTPListener {
 			Logger.print("/newGame : " + request.body());
 			response = GameRequest.createNewGame(request, response);
 			
+			Logger.print("Replying to /newGame with code: " + response.status() + ", message: " + response.body());
 			return response.body();
 		});
 		
@@ -57,6 +62,7 @@ public class HTTPListener {
 			Logger.print("/changeUsername : " + request.body());
 			response = UserRequest.changeUsername(request, response);
 			
+			Logger.print("Replying to /changeUsername with code: " + response.status() + ", message: " + response.body());
 			return response.body();
 		});
 		
@@ -75,6 +81,7 @@ public class HTTPListener {
 			Logger.print("/playGame : " + request.body());
 			response = GameRequest.playOnGame(request, response);
 			
+			Logger.print("Replying to /playGame with code: " + response.status() + ", message: " + response.body());
 			return response.body();
 		});
 		
@@ -87,9 +94,9 @@ public class HTTPListener {
 		//New start, will send notification token. If none before, it will be kept
 		post("/newStartup", (request, response) -> {
 			Logger.print("/newStartup : " + request.body());
-			
 			response = UserRequest.newStart(request, response);
 			
+			Logger.print("Replying to /newStartup with code: " + response.status() + ", message: " + response.body());
 			return response.body();
 		});
 		
@@ -98,6 +105,7 @@ public class HTTPListener {
 			Logger.print("/gameInfo/:gameID : " + request.params());
 			response = GameRequest.getGameBoardInfo(response, request);
 			
+			Logger.print("Replying to /gameInfo with code: " + response.status() + ", message: " + response.body());
 			return response.body();
 		}));
 		
@@ -105,9 +113,9 @@ public class HTTPListener {
 		//Return info on all games of user
 		get("/games/:token", (request, response) -> {
 			Logger.print("/games/:token : " + request.params());
-			
 			response = GameRequest.getBoardsOfUser(response, request);
 			
+			Logger.print("Replying to /games with code: " + response.status() + ", message: " + response.body());
 			return response.body();
 		});
 		
@@ -116,6 +124,7 @@ public class HTTPListener {
 			Logger.print("/userInfo/:token : " + request.params());
 			response = UserRequest.getUserInfo(request, response);
 			
+			Logger.print("Replying to /userInfo with code: " + response.status() + ", message: " + response.body());
 			return response.body();
 		}));
 		
@@ -131,6 +140,7 @@ public class HTTPListener {
 			JsonObject requestJSON = JSON.parseStringToJSON(request.body());
 			//TODO
 			
+			Logger.print("Replying to /message with code: " + response.status() + ", message: " + response.body());
 			return "";
 		});
 		
