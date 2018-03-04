@@ -200,7 +200,7 @@ public class GameRequest {
 				GamesFile.addGame(currentGame);
 				thisUser.addToBankAmount(currentGame.getCurrentAmount());
 				
-				String notificationString = thisUser.getUsername() + " has decided to keep the money";
+				String notificationString = thisUser.getUsername() + " has decided to keep the " + currentAmount + " bucks";
 				sendNotification(otherUser, notificationString);
 				
 				UsersFile.addUser(thisUser);
