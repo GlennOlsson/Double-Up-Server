@@ -46,7 +46,7 @@ public class Test {
 		
 //		new HTTPListener();
 		
-		new Test("");
+		new Test();
 	}
 	
 	public Test(String hey){
@@ -81,7 +81,7 @@ public class Test {
 		{
 			final ApnsPayloadBuilder payloadBuilder = new ApnsPayloadBuilder();
 			
-			payloadBuilder.setAlertTitle("Pinsamt att missa programmeringen, hörrödu!");
+			payloadBuilder.setAlertTitle("Shithead");
 			
 			payloadBuilder.setAlertBody("\uD83D\uDE21");
 
