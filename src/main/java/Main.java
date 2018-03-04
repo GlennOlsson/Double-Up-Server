@@ -3,7 +3,6 @@ import Backend.FileHandling;
 import Backend.Logger;
 import Spark.HTTPListener;
 import com.google.gson.JsonObject;
-import sun.rmi.runtime.Log;
 
 import java.io.IOException;
 

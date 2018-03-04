@@ -46,14 +46,14 @@ public class Test {
 		
 //		new HTTPListener();
 		
-		new Test();
+		new Test("");
 	}
 	
 	public Test(String hey){
 		try{
 			NotificationClient client = new NotificationClient();
 			
-			Notification not1 = new Notification("");
+			Notification not1 = new Notification(testToken);
 			for (int i = 0; i < 1; i++) {
 				not1.setBody("Sup bitch?");
 				not1.setSoundPath("none.aiff");
