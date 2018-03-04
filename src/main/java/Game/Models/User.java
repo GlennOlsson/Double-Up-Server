@@ -12,7 +12,9 @@ import static Game.Models.Token.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
+import java.util.Set;
 
 @SuppressWarnings("CanBeFinal")
 public class User {
@@ -174,10 +176,11 @@ public class User {
 	
 	public static User getUserWithUsername(String username) throws IOException{
 		JsonObject usersFile = FileHandling.getContentOfFileAsJSON(FileHandling.File.Users);
+		JsonObject usersObject = usersFile.getAsJsonObject(USERS_LIST_KEY);
 		
-		JsonArray tokensArray = usersFile.getAsJsonArray(USER_TOKEN_LIST_KEY);
-		for(JsonElement jsonElement : tokensArray){
-			String token = jsonElement.getAsString();
+		String[] userTokens = usersObject.keySet().toArray(new String[0]);
+		
+		for(String token : userTokens){
 			
 			User userOfToken = new User(token);
 			
@@ -192,26 +195,16 @@ public class User {
 	public static boolean doesUserExistWithToken(String token) throws IOException{
 		JsonObject usersFile = FileHandling.getContentOfFileAsJSON(FileHandling.File.Users);
 		
-		JsonArray tokensArray = usersFile.getAsJsonArray(USER_TOKEN_LIST_KEY);
 		JsonObject usersObject = usersFile.getAsJsonObject(USERS_LIST_KEY);
 		
-		boolean hasFound = false;
-		int index = 0;
-		while(hasFound == false && index < tokensArray.size()){
-			String thisToken = tokensArray.get(index).getAsString();
-			if(thisToken.equals(token)){
-				hasFound = true;
-			}
-			index++;
-		}
+		Set<String> userIdSet = usersObject.keySet();
 		
-		return hasFound && usersObject.has(token);
+		return userIdSet.contains(token);
 	}
 	
 	public boolean equals(User otherUser) {
 		return userToken.equals(otherUser.getUserToken());
 	}
-	
 }
 
 

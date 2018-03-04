@@ -12,6 +12,7 @@ import static Game.Models.Token.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class Game{
 	
@@ -152,13 +153,11 @@ public class Game{
 	
 	public static boolean hasGameWithID(String id) throws IOException{
 		JsonObject gamesFile = FileHandling.getContentOfFileAsJSON(FileHandling.File.Games);
-		
-		JsonArray idsArray = gamesFile.getAsJsonArray(GAME_IDS_LIST_KEY);
 		JsonObject gamesObject = gamesFile.getAsJsonObject(GAMES_LIST_KEY);
 		
-		JsonElement idString = JSON.parseStringToJSONElement(id);
+		Set<String> gameIDSet = gamesObject.keySet();
 		
-		return idsArray.contains(idString) && gamesObject.has(id);
+		return gameIDSet.contains(id);
 	}
 	
 	public boolean equals(Game otherGame) {

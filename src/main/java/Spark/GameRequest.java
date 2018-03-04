@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import static Backend.JSON.*;
@@ -349,11 +350,14 @@ public class GameRequest {
 	
 	private static User getRandomUser() throws IOException{
 		JsonObject userFileObject = FileHandling.getContentOfFileAsJSON(FileHandling.File.Users);
-		JsonArray tokenArray = userFileObject.getAsJsonArray(USER_TOKEN_LIST_KEY);
+		JsonObject userObject = userFileObject.getAsJsonObject(USERS_LIST_KEY);
 		
-		int randomIndex = new Random().nextInt(tokenArray.size());
+		Set<String> setOfTokens = userObject.keySet();
+		int randomIndex = new Random().nextInt(setOfTokens.size());
 		
-		String randomToken = tokenArray.get(randomIndex).getAsString();
+		String[] arrayOfTokens = setOfTokens.toArray(new String[]{});
+		
+		String randomToken = arrayOfTokens[randomIndex];
 		User thisUser = new User(randomToken);
 		
 		return thisUser;

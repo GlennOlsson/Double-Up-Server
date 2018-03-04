@@ -17,9 +17,9 @@ public class CleanGames {
 	}
 	
 	public CleanGames() throws IOException{
-		JsonArray allUserIDs = UsersFile.getAllUserIDs();
-		for(JsonElement jsonElement : allUserIDs){
-			String userID = jsonElement.getAsString();
+		String[] allUserIDs = UsersFile.getAllUserIDs();
+		
+		for(String userID : allUserIDs){
 			User user = new User(userID);
 			
 			JsonArray gamesOfUser = user.getGamesAsJSONArray();

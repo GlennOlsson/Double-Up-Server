@@ -8,9 +8,7 @@ import com.google.gson.JsonObject;
 
 import java.io.IOException;
 
-import static Backend.JSON.TOKEN_KEY;
-import static Backend.JSON.USERS_LIST_KEY;
-import static Backend.JSON.USER_TOKEN_LIST_KEY;
+import static Backend.JSON.*;
 
 public class UsersFile {
 	
@@ -19,13 +17,6 @@ public class UsersFile {
 		
 		JsonObject usersObject = usersFile.getAsJsonObject(USERS_LIST_KEY);
 		usersObject.add(user.getUserToken(), user.asJson());
-		
-		JsonArray tokensArray = usersFile.getAsJsonArray(USER_TOKEN_LIST_KEY);
-		
-		JsonElement tokenAsJson = JSON.parseStringToJSONElement(user.getUserToken());
-		if(!tokensArray.contains(tokenAsJson)) {
-			tokensArray.add(user.getUserToken());
-		}
 		
 		usersFile.add(USERS_LIST_KEY, usersObject);
 		
@@ -38,9 +29,10 @@ public class UsersFile {
 		addUser(user);
 	}
 	
-	public static JsonArray getAllUserIDs() throws IOException{
+	public static String[] getAllUserIDs() throws IOException{
 		JsonObject usersFile = FileHandling.getContentOfFileAsJSON(FileHandling.File.Users);
-		JsonArray usersIDsJSONArray = usersFile.getAsJsonArray(USER_TOKEN_LIST_KEY);
+		JsonObject usersObject = usersFile.getAsJsonObject(USERS_LIST_KEY);
+		String[] usersIDsJSONArray = usersObject.keySet().toArray(new String[0]);
 		return usersIDsJSONArray;
 	}
 	

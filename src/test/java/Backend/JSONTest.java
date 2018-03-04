@@ -28,7 +28,6 @@ public class JSONTest {
 		gamesFileObject.get(USERS_LIST_KEY);
 		gamesFileObject.get(TURN_KEY);
 		gamesFileObject.get(CURRENT_AMOUNT_KEY);
-		gamesFileObject.get(GAME_IDS_LIST_KEY);
 		gamesFileObject.get(IS_OVER_KEY);
 	}
 	
@@ -38,7 +37,6 @@ public class JSONTest {
 		usersFileObject.get(BANK_KEY);
 		usersFileObject.get(GAMES_LIST_KEY);
 		usersFileObject.get(NOTIFICATION_TOKEN_KEY);
-		usersFileObject.get(USER_TOKEN_LIST_KEY);
 	}
 	
 	@Test

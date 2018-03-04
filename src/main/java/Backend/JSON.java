@@ -9,14 +9,12 @@ public class JSON {
 	public static final String BANK_KEY = "BankAmount";
 	public static final String GAMES_LIST_KEY = "Games";
 	public static final String NOTIFICATION_TOKEN_KEY = "NotificationToken";
-	public static final String USER_TOKEN_LIST_KEY = "Tokens";
 	
 	//Games.json
 	public static final String GAMES_KEY = "Games";
 	public static final String USERS_LIST_KEY = "Users";
 	public static final String TURN_KEY = "Turn";
 	public static final String CURRENT_AMOUNT_KEY = "CurrentAmount";
-	public static final String GAME_IDS_LIST_KEY = "GameIDs";
 	public static final String IS_OVER_KEY = "IsOver";
 	public static final String CREATE_DATE_KEY = "CreateDate";
 	
