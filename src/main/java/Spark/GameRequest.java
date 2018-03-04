@@ -342,6 +342,8 @@ public class GameRequest {
 		}
 		catch (Exception e){
 			Logger.print("Could not send Notification");
+			Logger.logError(e, "Trying to send notification", "To " + userToSend.getUsername() + " with content "
+					 + content);
 		}
 	}
 	
