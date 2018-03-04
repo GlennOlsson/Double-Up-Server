@@ -29,6 +29,8 @@ public class GamesFile {
 		UsersFile.addGameToUser(game.getUsersList().get(1).getUserToken(), game.getID());
 		
 		FileHandling.saveToFile(gamesFileObject, FileHandling.File.Games);
+		
+		
 	}
 
 }
