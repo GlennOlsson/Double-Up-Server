@@ -9,20 +9,11 @@ version = '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-
-task printProps {
-    doLast {
-        println commandLineProjectProp
-        println gradlePropertiesProp
-        println systemProjectProp
-        println envProjectProp
-        println System.properties['system']
-    }
-}
-
 repositories {
     mavenCentral()
 }
+
+applicationDefaultJvmArgs = ["-javaagent:/home/tau/Downloads/jetty-alpn-agent-2.0.0.jar"]
 
 mainClassName = 'Main'
 
