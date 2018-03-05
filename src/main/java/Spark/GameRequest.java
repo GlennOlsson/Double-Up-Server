@@ -330,6 +330,7 @@ public class GameRequest {
 				Notification newGameNotification = new Notification(notificationToken);
 				newGameNotification.setBody(content);
 				newGameNotification.setBadgeNumber(1);
+				newGameNotification.setSoundPath("NotificationSound.m4a");
 				
 				boolean accepted = Constants.notificationClient.sendPushNotification(newGameNotification);
 				

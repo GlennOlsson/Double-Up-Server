@@ -53,9 +53,9 @@ public class Test {
 		try{
 			NotificationClient client = new NotificationClient();
 			
-			Notification not1 = new Notification(testToken);
+			Notification not1 = new Notification("D4CDBAE420D5D514C7043EB322FFE9B7910B6F6C8780966DC6B0C83E7654A3AF");
 			for (int i = 0; i < 1; i++) {
-				not1.setBody("Sup bitch?");
+				not1.setBody("Vad tycks om ljudet?");
 				not1.setSoundPath("NotificationSound.m4a");
 				not1.setBadgeNumber(69);
 				
