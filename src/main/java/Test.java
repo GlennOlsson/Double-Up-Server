@@ -56,7 +56,7 @@ public class Test {
 			Notification not1 = new Notification(testToken);
 			for (int i = 0; i < 1; i++) {
 				not1.setBody("Sup bitch?");
-				not1.setSoundPath("none.aiff");
+				not1.setSoundPath("NotificationSound.m4a");
 				not1.setBadgeNumber(69);
 				
 				System.out.println(client.sendPushNotification(not1));
