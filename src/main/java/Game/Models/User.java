@@ -24,6 +24,9 @@ public class User {
 	private ArrayList<Game> gamesList;
 	private String createDate;
 	
+	private String lastLoginDate;
+	private Integer startCount;
+	
 	JsonArray gamesArray;
 	
 	private String userToken;
@@ -61,12 +64,20 @@ public class User {
 		}
 		
 		createDate = jsonObject.get(CREATE_DATE_KEY).getAsString();
+
+		startCount = jsonObject.get(AMOUNT_OF_STARTS_KEY).getAsInt();
+		lastLoginDate = jsonObject.get(LAST_LOGIN_DATE_KEY).getAsString();
 		
 		userToken = jsonObject.get(TOKEN_KEY).getAsString();
 	}
 	
 	private User(){
 		//Not accessible
+	}
+	
+	public void newStart() throws IOException{
+		startCount++;
+		lastLoginDate = Logger.getDate();
 	}
 	
 	public JsonArray getGamesAsJSONArray(){
@@ -145,6 +156,8 @@ public class User {
 		userJSON.add(GAMES_LIST_KEY, gamesArray);
 		userJSON.addProperty(NOTIFICATION_TOKEN_KEY, notificationToken);
 		userJSON.addProperty(CREATE_DATE_KEY, createDate);
+		userJSON.addProperty(LAST_LOGIN_DATE_KEY, lastLoginDate);
+		userJSON.addProperty(AMOUNT_OF_STARTS_KEY, startCount);
 		
 		return userJSON;
 	}
@@ -156,6 +169,8 @@ public class User {
 		newUserObject.addProperty(BANK_KEY, 100); //Start amount for new users
 		newUserObject.add(GAMES_LIST_KEY, new JsonArray());
 		newUserObject.addProperty(CREATE_DATE_KEY, Logger.getDate());
+		newUserObject.addProperty(LAST_LOGIN_DATE_KEY, Logger.getDate());
+		newUserObject.addProperty(AMOUNT_OF_STARTS_KEY, 1);
 		
 		if(notificationToken != null && notificationToken.length() > 0) {
 			newUserObject.addProperty(NOTIFICATION_TOKEN_KEY, notificationToken);

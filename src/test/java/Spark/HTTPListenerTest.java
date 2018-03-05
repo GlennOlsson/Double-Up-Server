@@ -81,14 +81,15 @@ public class HTTPListenerTest {
 		assertEquals(200, POST("/newGame", putObject));
 	}
 
-	@Test
-	public void newGameWorksWithRandomUser(){
-		JsonObject putObject = new JsonObject();
-		putObject.addProperty(JSON.TOKEN_KEY, "TOKEN1");
-		putObject.addProperty(JSON.START_AMOUNT_KEY, 40);
-
-		assertEquals(200, POST("/newGame", putObject));
-	}
+//	@Test
+//	public void newGameWorksWithRandomUser(){
+//		JsonObject putObject = new JsonObject();
+//		putObject.addProperty(JSON.TOKEN_KEY, "TOKEN1");
+//		putObject.addProperty(JSON.START_AMOUNT_KEY, 40);
+//
+//		assertEquals(200, POST("/newGame", putObject));
+//	}
+	
 	@Test
 	public void playOnGameWorksBackAndForth(){
 		String liveGameID = "PVW6UkF1s51D6qO";

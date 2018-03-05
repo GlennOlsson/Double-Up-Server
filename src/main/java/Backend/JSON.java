@@ -9,6 +9,8 @@ public class JSON {
 	public static final String BANK_KEY = "BankAmount";
 	public static final String GAMES_LIST_KEY = "Games";
 	public static final String NOTIFICATION_TOKEN_KEY = "NotificationToken";
+	public static final String LAST_LOGIN_DATE_KEY = "LastLogin";
+	public static final String AMOUNT_OF_STARTS_KEY = "StartedCount";
 	
 	//Games.json
 	public static final String GAMES_KEY = "Games";

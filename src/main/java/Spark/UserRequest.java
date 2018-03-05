@@ -113,6 +113,7 @@ public class UserRequest {
 				User thisUser = new User(userToken);
 				
 				thisUser.setNotificationToken(notificationToken);
+				thisUser.newStart();
 				
 				UsersFile.addUser(thisUser);
 				
