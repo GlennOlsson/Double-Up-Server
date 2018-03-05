@@ -32,8 +32,8 @@ public class HTTPListenerTest {
 	@Before
 	public void setUp() throws IOException{
 		JsonObject object = FileHandling.getContentOfFileAsJSON(FileHandling.File.Secret);
-		mainURL = object.get(JSON.MAIN_URL_KEY).getAsString();
-//		mainURL = "http://localhost:8282";
+//		mainURL = object.get(JSON.MAIN_URL_KEY).getAsString();
+		mainURL = "http://localhost:8282";
 	}
 	
 	@Test

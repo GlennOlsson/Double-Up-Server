@@ -19,6 +19,7 @@ public class JSON {
 	public static final String CURRENT_AMOUNT_KEY = "CurrentAmount";
 	public static final String IS_OVER_KEY = "IsOver";
 	public static final String CREATE_DATE_KEY = "CreateDate";
+	public static final String LAST_PLAY_KEY = "LastPlay";
 	
 	//Secret.json
 	public static final String CERT_PATH_KEY = "cert-path";

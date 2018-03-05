@@ -170,6 +170,7 @@ public class GameRequest {
 			}
 			
 			currentGame.setOver(! didDouble);
+			currentGame.newPlay();
 			
 			if(didDouble){
 				if(currentGame.getCurrentAmount() * 2 != currentAmount) {

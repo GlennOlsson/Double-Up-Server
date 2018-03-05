@@ -24,6 +24,8 @@ public class Game{
 	private boolean isOver;
 	private String createDate;
 	
+	private String lastPlay;
+	
 	private String ID;
 	
 	
@@ -50,6 +52,10 @@ public class Game{
 	
 	private Game(){
 		//Not accessible
+	}
+	
+	public void newPlay(){
+		lastPlay = Logger.getDate();
 	}
 	
 	public String getCreateDate() {
@@ -107,6 +113,7 @@ public class Game{
 		gameJSON.addProperty(IS_OVER_KEY, isOver);
 		gameJSON.addProperty(CURRENT_AMOUNT_KEY, currentAmount);
 		gameJSON.addProperty(CREATE_DATE_KEY, createDate);
+		gameJSON.addProperty(LAST_PLAY_KEY, lastPlay);
 		
 		return gameJSON;
 	}
@@ -118,6 +125,8 @@ public class Game{
 		currentAmount = jsonObject.get(CURRENT_AMOUNT_KEY).getAsInt();
 		isOver = jsonObject.get(IS_OVER_KEY).getAsBoolean();
 		createDate = jsonObject.get(CREATE_DATE_KEY).getAsString();
+		
+		lastPlay = jsonObject.get(LAST_PLAY_KEY).getAsString();
 		
 		ID = jsonObject.get(ID_KEY).getAsString();
 	}
@@ -143,6 +152,8 @@ public class Game{
 		newGameJSON.addProperty(CURRENT_AMOUNT_KEY, startValue);
 		newGameJSON.addProperty(IS_OVER_KEY, false);
 		newGameJSON.addProperty(CREATE_DATE_KEY, Logger.getDate());
+		
+		newGameJSON.addProperty(LAST_PLAY_KEY, Logger.getDate());
 		
 		String generatedGameID = generateToken(whoStarts + Integer.toString(startValue) + userTokens[0]);
 		newGameJSON.addProperty(ID_KEY, generatedGameID);
