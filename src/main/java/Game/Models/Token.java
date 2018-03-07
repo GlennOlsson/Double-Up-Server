@@ -1,5 +1,6 @@
 package Game.Models;
 
+import java.util.Base64;
 import java.util.Random;
 
 public class Token {
@@ -13,8 +14,8 @@ public class Token {
 		//Removing everything but the last 5 characters, as they are mostly the same
 		String millis = (Long.toString(currentMillis + (random.nextInt(10000) - 5000)).substring(8));
 		
-		for (int i = 0; i < 20; i++) {
-			int randomNumber = random.nextInt(9999);
+		for (int i = 0; i < 50; i++) {
+			int randomNumber = random.nextInt(999999);
 			string += randomNumber;
 		}
 		
@@ -42,7 +43,12 @@ public class Token {
 		//The length / 3 will give the amount of times it can divide by three (obv), and then
 		//the final loop should use the remaining chars
 		
-		String abc = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890+-"; //Base 64
+		String abc = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-+"; //Base 64
+		
+		digits += Long.toString(System.nanoTime());
+		
+		Base64.Encoder encoder = Base64.getEncoder();
+		String base64Digits = encoder.encodeToString(digits.getBytes());
 		
 		int lengthMod3 = digits.length() / 3;
 		
@@ -70,6 +76,6 @@ public class Token {
 //
 //			token.append((char) finalPart);
 		}
-		return token.toString();
+		return base64Digits + token.toString();
 	}
 }
