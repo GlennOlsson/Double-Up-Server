@@ -38,11 +38,12 @@
 ```
 
 ### POST /newStartup 
-##### NotificationToken is optional
+##### NotificationToken and Version are optional, but recommended
 ```json
 {
    "Token": "TOKEN",
-   "NotificationToken": "TOKEN"
+   "NotificationToken": "TOKEN",
+   "Version": "APP_VERSION"
 }
 ```
 

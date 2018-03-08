@@ -105,25 +105,30 @@ public class UserRequest {
 	public static Response newStart(Request request, Response response){
 		try{
 			JsonObject requestJSON = JSON.parseStringToJSON(request.body());
-			
-			if(requestJSON.has(NOTIFICATION_TOKEN_KEY) && ! requestJSON.get(NOTIFICATION_TOKEN_KEY).isJsonNull()){
-				String notificationToken = requestJSON.get(NOTIFICATION_TOKEN_KEY).getAsString();
+				
 				String userToken = requestJSON.get(TOKEN_KEY).getAsString();
 				
 				User thisUser = new User(userToken);
 				
-				thisUser.setNotificationToken(notificationToken);
+				JsonElement notificationToken = requestJSON.get(NOTIFICATION_TOKEN_KEY);
+			
+				response.status(201);
+				if(!notificationToken.isJsonNull()) {
+					thisUser.setNotificationToken(notificationToken.getAsString());
+					response.status(200);
+				}
+			
+				JsonElement appVersion = requestJSON.get(VERSION_KEY);
+				
+				if(!appVersion.isJsonNull()){
+					thisUser.setAppVersion(appVersion.getAsString());
+				}
+				
 				thisUser.newStart();
 				
 				UsersFile.addUser(thisUser);
 				
-				response.status(200);
 				response.body(Integer.toString(response.status()));
-			}
-			else{
-				response.status(201);
-				response.body(Integer.toString(response.status()));
-			}
 		}
 		catch (IOException e){
 			e.printStackTrace();

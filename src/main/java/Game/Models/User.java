@@ -26,6 +26,7 @@ public class User {
 	
 	private String lastLoginDate;
 	private Integer startCount;
+	private String appVersion;
 	
 	private boolean isTestUser;
 	
@@ -75,6 +76,13 @@ public class User {
 		}
 		else{
 			isTestUser = false;
+		}
+		
+		if(jsonObject.has(VERSION_KEY)){
+			appVersion = jsonObject.get(VERSION_KEY).getAsString();
+		}
+		else{
+			appVersion = "< 1.1";
 		}
 		
 		userToken = jsonObject.get(TOKEN_KEY).getAsString();
@@ -153,6 +161,10 @@ public class User {
 		this.notificationToken = notificationToken;
 	}
 	
+	public void setAppVersion(String appVersion) {
+		this.appVersion = appVersion;
+	}
+	
 	public boolean isTestUser() {
 		return isTestUser;
 	}
@@ -172,6 +184,7 @@ public class User {
 		userJSON.addProperty(LAST_LOGIN_DATE_KEY, lastLoginDate);
 		userJSON.addProperty(AMOUNT_OF_STARTS_KEY, startCount);
 		userJSON.addProperty(IS_TEST_USER_KEY, isTestUser);
+		userJSON.addProperty(VERSION_KEY, appVersion);
 		
 		return userJSON;
 	}
@@ -186,6 +199,7 @@ public class User {
 		newUserObject.addProperty(LAST_LOGIN_DATE_KEY, Logger.getDate());
 		newUserObject.addProperty(AMOUNT_OF_STARTS_KEY, 1);
 		newUserObject.addProperty(IS_TEST_USER_KEY, false);
+		newUserObject.addProperty(VERSION_KEY, "?");
 		
 		if(notificationToken != null && notificationToken.length() > 0) {
 			newUserObject.addProperty(NOTIFICATION_TOKEN_KEY, notificationToken);
