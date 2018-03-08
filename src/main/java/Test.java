@@ -7,6 +7,7 @@ import Game.Models.Game;
 import Game.Models.Token;
 import Game.Models.User;
 import Game.Models.UsersFile;
+import Spark.GameRequest;
 import Spark.HTTPListener;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
@@ -46,7 +47,8 @@ public class Test {
 		
 //		new HTTPListener();
 		
-		new Test("");
+		System.out.println(FileHandling.getContentOfFileAsJSON(FileHandling.File.Games));
+		
 	}
 	
 	public Test(String hey){

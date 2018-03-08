@@ -14,7 +14,7 @@ public class Token {
 		//Removing everything but the last 5 characters, as they are mostly the same
 		String millis = (Long.toString(currentMillis + (random.nextInt(10000) - 5000)).substring(8));
 		
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 100; i++) {
 			int randomNumber = random.nextInt(999999);
 			string += randomNumber;
 		}
@@ -24,8 +24,8 @@ public class Token {
 			string += abc.charAt(random.nextInt(93));
 		}
 		
-		if(string.length() > 20){
-			string = string.substring(0, 20);
+		if(string.length() > 50){
+			string = string.substring(0, 50);
 		}
 		
 		StringBuilder nameCharCodes = new StringBuilder();
@@ -46,9 +46,6 @@ public class Token {
 		String abc = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-+"; //Base 64
 		
 		digits += Long.toString(System.nanoTime());
-		
-		Base64.Encoder encoder = Base64.getEncoder();
-		String base64Digits = encoder.encodeToString(digits.getBytes());
 		
 		int lengthMod3 = digits.length() / 3;
 		
@@ -76,6 +73,6 @@ public class Token {
 //
 //			token.append((char) finalPart);
 		}
-		return base64Digits + token.toString();
+		return token.toString();
 	}
 }
