@@ -360,7 +360,16 @@ public class GameRequest {
 		String randomToken = arrayOfTokens[randomIndex];
 		User thisUser = new User(randomToken);
 		
+		if(thisUser.isTestUser()){
+			return getRandomUser();
+		}
+		
 		return thisUser;
+	}
+	public static void main(String[] args) throws IOException{
+		for (int i = 0; i < 10; i++) {
+			System.out.println(getRandomUser().getUsername());
+		}
 	}
 }
 

@@ -27,6 +27,8 @@ public class User {
 	private String lastLoginDate;
 	private Integer startCount;
 	
+	private boolean isTestUser;
+	
 	JsonArray gamesArray;
 	
 	private String userToken;
@@ -67,6 +69,13 @@ public class User {
 
 		startCount = jsonObject.get(AMOUNT_OF_STARTS_KEY).getAsInt();
 		lastLoginDate = jsonObject.get(LAST_LOGIN_DATE_KEY).getAsString();
+		
+		if(jsonObject.has(IS_TEST_USER_KEY)){
+			isTestUser = jsonObject.get(IS_TEST_USER_KEY).getAsBoolean();
+		}
+		else{
+			isTestUser = false;
+		}
 		
 		userToken = jsonObject.get(TOKEN_KEY).getAsString();
 	}
@@ -142,6 +151,10 @@ public class User {
 	
 	public void setNotificationToken(String notificationToken){
 		this.notificationToken = notificationToken;
+	}
+	
+	public boolean isTestUser() {
+		return isTestUser;
 	}
 	
 	public String toJSONString(){

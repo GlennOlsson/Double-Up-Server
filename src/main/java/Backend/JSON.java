@@ -11,6 +11,7 @@ public class JSON {
 	public static final String NOTIFICATION_TOKEN_KEY = "NotificationToken";
 	public static final String LAST_LOGIN_DATE_KEY = "LastLogin";
 	public static final String AMOUNT_OF_STARTS_KEY = "StartedCount";
+	public static final String IS_TEST_USER_KEY = "IsTestUser";
 	
 	//Games.json
 	public static final String GAMES_KEY = "Games";
