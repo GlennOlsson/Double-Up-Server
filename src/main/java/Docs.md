@@ -62,6 +62,14 @@
 }
 ```
 
+### POST /newStartup 
+#### Token is optional. If Token is provided, make sure to save the token. This is a way to force change user token
+```json
+{
+   "Token": "USER_TOKEN"
+}
+```
+
 ### GET /gameInfo/:gameID
 ```json
 {

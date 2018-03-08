@@ -2,6 +2,7 @@ import APNs.API.Notification.Constants;
 import Backend.FileHandling;
 import APNs.API.Notification.Notification;
 import APNs.API.Notification.NotificationClient;
+import Backend.JSON;
 import Backend.Logger;
 import Game.Models.Game;
 import Game.Models.Token;
@@ -11,6 +12,7 @@ import Spark.GameRequest;
 import Spark.HTTPListener;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 import com.turo.pushy.apns.ApnsClient;
 import com.turo.pushy.apns.ApnsClientBuilder;
 import com.turo.pushy.apns.PushNotificationResponse;
@@ -20,6 +22,7 @@ import com.turo.pushy.apns.util.TokenUtil;
 import com.turo.pushy.apns.util.concurrent.PushNotificationFuture;
 
 import java.io.File;
+import java.io.FileReader;
 import java.util.concurrent.ExecutionException;
 
 import static Backend.JSON.*;
@@ -46,8 +49,6 @@ public class Test {
 		Constants.APP_BUNDLE = appBundle;
 		
 //		new HTTPListener();
-		
-		System.out.println(FileHandling.getContentOfFileAsJSON(FileHandling.File.Games));
 		
 	}
 	
