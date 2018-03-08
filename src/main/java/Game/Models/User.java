@@ -171,6 +171,7 @@ public class User {
 		userJSON.addProperty(CREATE_DATE_KEY, createDate);
 		userJSON.addProperty(LAST_LOGIN_DATE_KEY, lastLoginDate);
 		userJSON.addProperty(AMOUNT_OF_STARTS_KEY, startCount);
+		userJSON.addProperty(IS_TEST_USER_KEY, isTestUser);
 		
 		return userJSON;
 	}
@@ -184,6 +185,7 @@ public class User {
 		newUserObject.addProperty(CREATE_DATE_KEY, Logger.getDate());
 		newUserObject.addProperty(LAST_LOGIN_DATE_KEY, Logger.getDate());
 		newUserObject.addProperty(AMOUNT_OF_STARTS_KEY, 1);
+		newUserObject.addProperty(IS_TEST_USER_KEY, false);
 		
 		if(notificationToken != null && notificationToken.length() > 0) {
 			newUserObject.addProperty(NOTIFICATION_TOKEN_KEY, notificationToken);
