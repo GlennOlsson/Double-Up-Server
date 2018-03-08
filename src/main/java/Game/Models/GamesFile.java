@@ -23,5 +23,12 @@ public class GamesFile {
 		
 		FileHandling.saveToFile(gamesFileObject, FileHandling.File.Games);
 	}
+	
+	public static void removeGame(Game game) throws IOException{
+		JsonObject gamesFileObject = FileHandling.getContentOfFileAsJSON(FileHandling.File.Games);
+		JsonObject gamesListObject = gamesFileObject.getAsJsonObject(GAMES_LIST_KEY);
+		
+		gamesListObject.remove(game.getID());
+	}
 
 }
