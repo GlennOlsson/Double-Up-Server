@@ -53,15 +53,15 @@ public class Test {
 		Constants.CERT_PATH = certPath;
 		Constants.APP_BUNDLE = appBundle;
 		
-		new HTTPListener();
-		
+//		new HTTPListener();
+
 //		UsersFile file = new UsersFile();
 //
 //		User user = new User("TOKEN1");
 //		file.addUser(user);
 //		file.save();
 		
-//		System.out.println(FileHandling.getContentOfFileAsJSON(FileHandling.File.Users));
+		System.out.println(FileHandling.getContentOfFileAsJSON(FileHandling.File.Games));
 		
 		
 		

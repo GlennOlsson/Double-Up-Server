@@ -35,6 +35,8 @@ public class FileHandling {
 		byte[] fileInBytes = Files.readAllBytes(Paths.get(file.getFilePath()));
 		String contentOfFileString = new String(fileInBytes);
 		
+//		System.out.println(contentOfFileString);
+		
 		JsonObject fileObject = JSON.parseStringToJSON(contentOfFileString);
 		
 		return fileObject;

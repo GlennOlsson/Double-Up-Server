@@ -188,7 +188,7 @@ public class GameRequest {
 					
 					return response;
 				}
-				if(thisUser.getBankAmount() < 2 * currentAmount){
+				if(thisUser.getBankAmount() < currentAmount){
 					response.status(407);
 					response.body(Integer.toString(response.status()));
 					
