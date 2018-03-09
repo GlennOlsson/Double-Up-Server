@@ -133,6 +133,7 @@ public class UserRequest {
 			//If new token is set, it is provided and the field is removed from the user
 			String newToken = thisUser.getNewToken();
 			if(newToken != null){
+				Logger.print("New forced token! token: " + newToken);
 				responseObject.addProperty(TOKEN_KEY, newToken);
 				thisUser.setNewToken(null);
 			}
