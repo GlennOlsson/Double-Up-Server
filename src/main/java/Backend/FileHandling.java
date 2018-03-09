@@ -14,15 +14,21 @@ public class FileHandling {
 	
 	public enum File{
 		
-		Users(getPath() + USERS_FILE), Games(getPath() + GAMES_FILE), Secret(SECRET_FILE);
+		Users(getPath(), USERS_FILE), Games(getPath(), GAMES_FILE), Secret("", SECRET_FILE);
 		
-		private String fileName;
-		File(String fileName){
-			this.fileName = fileName;
+		private String file;
+		private String path;
+		File(String path, String file){
+			this.path = path;
+			this.file = file;
 		}
 		
 		public String getFilePath() {
-			return fileName;
+			return path + file;
+		}
+		
+		public String getFileName(){
+			return file;
 		}
 	}
 	
@@ -49,7 +55,7 @@ public class FileHandling {
 	public static void saveToFile(String content, File file){
 		try{
 			Files.write(Paths.get(file.getFilePath()), content.getBytes());
-			Logger.print("Successfully saved to " + file.fileName + " file");
+			Logger.print("Successfully saved to " + file.getFileName() + " file");
 		}
 		catch (Exception e){
 			System.err.println("Could not save file");
@@ -66,7 +72,7 @@ public class FileHandling {
 			String beautifiedJSON = JSON.beautifyJSON(content);
 			
 			Files.write(Paths.get(file.getFilePath()), beautifiedJSON.getBytes());
-			Logger.print("Successfully saved to " + file.fileName + " file");
+			Logger.print("Successfully saved to " + file.getFileName() + " file");
 		}
 		catch (Exception e){
 			System.err.println("Could not save file");
