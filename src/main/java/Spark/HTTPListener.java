@@ -78,6 +78,7 @@ public class HTTPListener {
 			Logger.print("/playGame : " + request.body());
 			response = GameRequest.playOnGame(request, response);
 			
+			Logger.print("Returning: " + response.body());
 			return response.body();
 		});
 		
