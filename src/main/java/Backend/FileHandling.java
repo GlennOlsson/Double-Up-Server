@@ -66,7 +66,7 @@ public class FileHandling {
 			String beautifiedJSON = JSON.beautifyJSON(content);
 			
 			Files.write(Paths.get(file.getFilePath()), beautifiedJSON.getBytes());
-			Logger.print("Successfully saved to file");
+			Logger.print("Successfully saved to " + file.fileName + " file");
 		}
 		catch (Exception e){
 			System.err.println("Could not save file");
