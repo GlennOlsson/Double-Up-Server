@@ -109,33 +109,44 @@ public class UserRequest {
 	public static Response newStart(Request request, Response response){
 		try{
 			JsonObject requestJSON = JSON.parseStringToJSON(request.body());
-				
-				String userToken = requestJSON.get(TOKEN_KEY).getAsString();
-				
-				User thisUser = new User(userToken);
-				
-				JsonElement notificationToken = requestJSON.get(NOTIFICATION_TOKEN_KEY);
 			
-				response.status(201);
-				if(notificationToken != null && !notificationToken.isJsonNull()) {
-					thisUser.setNotificationToken(notificationToken.getAsString());
-					response.status(200);
-				}
+			String userToken = requestJSON.get(TOKEN_KEY).getAsString();
 			
-				JsonElement appVersion = requestJSON.get(VERSION_KEY);
-				
-				if(appVersion != null && !appVersion.isJsonNull()){
-					thisUser.setAppVersion(appVersion.getAsString());
-				}
-				
-				thisUser.newStart();
-				
-				UsersFile usersFile = new UsersFile();
-				
-				usersFile.addUser(thisUser);
-				usersFile.save();
-				
-				response.body(Integer.toString(response.status()));
+			User thisUser = new User(userToken);
+			
+			JsonElement notificationToken = requestJSON.get(NOTIFICATION_TOKEN_KEY);
+			
+			response.status(201);
+			if(notificationToken != null && !notificationToken.isJsonNull()) {
+				thisUser.setNotificationToken(notificationToken.getAsString());
+				response.status(200);
+			}
+			
+			JsonElement appVersion = requestJSON.get(VERSION_KEY);
+			
+			if(appVersion != null && !appVersion.isJsonNull()){
+				thisUser.setAppVersion(appVersion.getAsString());
+			}
+			
+			JsonObject responseObject = new JsonObject();
+			
+			//If new token is set, it is provided and the field is removed from the user
+			String newToken = thisUser.getNewToken();
+			if(newToken != null){
+				responseObject.addProperty(TOKEN_KEY, newToken);
+				thisUser.setNewToken(null);
+			}
+			
+			thisUser.newStart();
+			
+			UsersFile usersFile = new UsersFile();
+			
+			usersFile.addUser(thisUser);
+			usersFile.save();
+			
+			
+			
+			response.body(JSON.beautifyJSON(responseObject));
 		}
 		catch (IOException e){
 			e.printStackTrace();

@@ -13,6 +13,7 @@ public class JSON {
 	public static final String AMOUNT_OF_STARTS_KEY = "StartedCount";
 	public static final String IS_TEST_USER_KEY = "IsTestUser";
 	public static final String VERSION_KEY = "Version";
+	public static final String NEW_TOKEN_KEY = "NewToken";
 	
 	//Games.json
 	public static final String GAMES_KEY = "Games";

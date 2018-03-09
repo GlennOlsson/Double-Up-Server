@@ -30,6 +30,8 @@ public class User {
 	
 	private boolean isTestUser;
 	
+	private String newToken;
+	
 	JsonArray gamesArray;
 	
 	private String userToken;
@@ -85,6 +87,10 @@ public class User {
 			appVersion = "< 1.1";
 		}
 		
+		if(jsonObject.has(NEW_TOKEN_KEY)){
+			newToken = jsonObject.get(NEW_TOKEN_KEY).getAsString();
+		}
+		
 		userToken = jsonObject.get(TOKEN_KEY).getAsString();
 	}
 	
@@ -95,6 +101,18 @@ public class User {
 	public void newStart() throws IOException{
 		startCount++;
 		lastLoginDate = Logger.getDate();
+	}
+	
+	/**
+	 * OBS! CAN BE NULL
+	 * @return new token, null if should not change
+	 */
+	public String getNewToken() {
+		return newToken;
+	}
+	
+	public void setNewToken(String newToken) {
+		this.newToken = newToken;
 	}
 	
 	public JsonArray getGamesAsJSONArray(){
@@ -185,6 +203,10 @@ public class User {
 		userJSON.addProperty(AMOUNT_OF_STARTS_KEY, startCount);
 		userJSON.addProperty(IS_TEST_USER_KEY, isTestUser);
 		userJSON.addProperty(VERSION_KEY, appVersion);
+		
+		if(newToken != null){
+			userJSON.addProperty(NEW_TOKEN_KEY, newToken);
+		}
 		
 		return userJSON;
 	}
