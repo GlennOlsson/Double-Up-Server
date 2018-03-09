@@ -39,7 +39,9 @@ public class UserRequest {
 			
 			User newUser = User.createNewUser(suppliedUsername, suppliedNotificationToken);
 			
-			UsersFile.addUser(newUser);
+			UsersFile usersFile = new UsersFile();
+			usersFile.addUser(newUser);
+			usersFile.save();
 			
 			JsonObject responseJSON = new JsonObject();
 			responseJSON.addProperty("UserToken", newUser.getUserToken());
@@ -84,7 +86,9 @@ public class UserRequest {
 			User thisUser = new User(suppliedToken);
 			thisUser.setUsername(newUsername);
 			
-			UsersFile.addUser(thisUser);
+			UsersFile usersFile = new UsersFile();
+			usersFile.addUser(thisUser);
+			usersFile.save();
 			
 			response.status(200);
 			response.body(Integer.toString(response.status()));
@@ -113,20 +117,23 @@ public class UserRequest {
 				JsonElement notificationToken = requestJSON.get(NOTIFICATION_TOKEN_KEY);
 			
 				response.status(201);
-				if(!notificationToken.isJsonNull()) {
+				if(notificationToken != null && !notificationToken.isJsonNull()) {
 					thisUser.setNotificationToken(notificationToken.getAsString());
 					response.status(200);
 				}
 			
 				JsonElement appVersion = requestJSON.get(VERSION_KEY);
 				
-				if(!appVersion.isJsonNull()){
+				if(appVersion != null && !appVersion.isJsonNull()){
 					thisUser.setAppVersion(appVersion.getAsString());
 				}
 				
 				thisUser.newStart();
 				
-				UsersFile.addUser(thisUser);
+				UsersFile usersFile = new UsersFile();
+				
+				usersFile.addUser(thisUser);
+				usersFile.save();
 				
 				response.body(Integer.toString(response.status()));
 		}

@@ -46,7 +46,7 @@ public class Game{
 			
 		}
 		catch (IOException e){
-			e.printStackTrace();
+			Logger.logError(e, "Error in Game constructor", "ID: " + ID);
 		}
 	}
 	

@@ -12,28 +12,35 @@ import static Backend.JSON.*;
 
 public class UsersFile {
 	
-	public static void addUser(User user) throws IOException{
+	JsonObject usersObject;
+	
+	public UsersFile() throws IOException{
 		JsonObject usersFile = FileHandling.getContentOfFileAsJSON(FileHandling.File.Users);
-		
-		JsonObject usersObject = usersFile.getAsJsonObject(USERS_LIST_KEY);
-		usersObject.add(user.getUserToken(), user.asJson());
-		
-		usersFile.add(USERS_LIST_KEY, usersObject);
-		
-		FileHandling.saveToFile(usersFile, FileHandling.File.Users);
+		usersObject = usersFile.getAsJsonObject(USERS_LIST_KEY);
 	}
 	
-	public static void addGameToUser(String userToken, String gameID) throws IOException{
+	public void addUser(User user) throws IOException{
+		usersObject.add(user.getUserToken(), user.asJson());
+	}
+	
+	public void removeUser(User user) throws IOException{
+		usersObject.add(user.getUserToken(), user.asJson());
+	}
+	
+	public void addGameToUser(String userToken, String gameID) throws IOException{
 		User user = new User(userToken);
 		user.addGame(gameID);
 		addUser(user);
 	}
 	
-	public static String[] getAllUserIDs() throws IOException{
-		JsonObject usersFile = FileHandling.getContentOfFileAsJSON(FileHandling.File.Users);
-		JsonObject usersObject = usersFile.getAsJsonObject(USERS_LIST_KEY);
+	public String[] getAllUserIDs() throws IOException{
 		String[] usersIDsJSONArray = usersObject.keySet().toArray(new String[0]);
 		return usersIDsJSONArray;
 	}
 	
+	public void save(){
+		JsonObject usersFile = new JsonObject();
+		usersFile.add(USERS_LIST_KEY, usersObject);
+		FileHandling.saveToFile(usersFile, FileHandling.File.Users);
+	}
 }

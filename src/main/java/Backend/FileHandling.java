@@ -47,7 +47,7 @@ public class FileHandling {
 	public static void saveToFile(String content, File file){
 		try{
 			Files.write(Paths.get(file.getFilePath()), content.getBytes());
-			Logger.print("Successfully saved to file");
+			Logger.print("Successfully saved to " + file.fileName + " file");
 		}
 		catch (Exception e){
 			System.err.println("Could not save file");

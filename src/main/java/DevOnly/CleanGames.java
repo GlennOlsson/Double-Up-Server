@@ -17,7 +17,8 @@ public class CleanGames {
 	}
 	
 	public CleanGames() throws IOException{
-		String[] allUserIDs = UsersFile.getAllUserIDs();
+		UsersFile usersFile = new UsersFile();
+		String[] allUserIDs = usersFile.getAllUserIDs();
 		
 		for(String userID : allUserIDs){
 			User user = new User(userID);
@@ -33,7 +34,8 @@ public class CleanGames {
 					gamesOfUser.remove(i);
 				}
 			}
-			UsersFile.addUser(user);
+			usersFile.addUser(user);
+			usersFile.save();
 		}
 		
 	}

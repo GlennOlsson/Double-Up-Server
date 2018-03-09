@@ -41,7 +41,7 @@ public class HTTPListenerTest {
 		String randomUsername = "Test" + new Random().nextInt(10000);
 
 		JsonObject putObject = new JsonObject();
-		putObject.addProperty(JSON.USERNAME_KEY, "Test9103");
+		putObject.addProperty(JSON.USERNAME_KEY, randomUsername);
 
 
 		assertEquals(200, POST("/newUser", putObject));

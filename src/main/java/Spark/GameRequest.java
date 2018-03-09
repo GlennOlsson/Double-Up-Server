@@ -78,14 +78,20 @@ public class GameRequest {
 			
 			Game thisGame = Game.createNewGame(userTokens, opponentUser.getUserToken(), startAmount);
 			
-			GamesFile.addGame(thisGame);
+			GamesFile gamesFile = new GamesFile();
+			gamesFile.addGame(thisGame);
+			gamesFile.save();
+			
+			UsersFile usersFile = new UsersFile();
 			
 			thisUser.addGame(thisGame.getID());
 			thisUser.addToBankAmount(-startAmount);
-			UsersFile.addUser(thisUser);
+			usersFile.addUser(thisUser);
 			
 			opponentUser.addGame(thisGame.getID());
-			UsersFile.addUser(opponentUser);
+			usersFile.addUser(opponentUser);
+			
+			usersFile.save();
 			
 			JsonObject responseJSON = new JsonObject();
 			responseJSON.addProperty(GAME_ID_KEY, thisGame.getID());
@@ -127,7 +133,7 @@ public class GameRequest {
 				currentGame = new Game(gameID);
 			}
 			catch (NullPointerException e){
-				Logger.logError(e, "No game with ID", "Id is " + gameID);
+				Logger.print("No game with id: " + gameID + ", returning 401");
 				
 				response.status(401);
 				response.body(Integer.toString(response.status()));
@@ -172,6 +178,9 @@ public class GameRequest {
 			currentGame.setOver(! didDouble);
 			currentGame.newPlay();
 			
+			UsersFile usersFile = new UsersFile();
+			GamesFile gamesFile = new GamesFile();
+			
 			if(didDouble){
 				if(currentGame.getCurrentAmount() * 2 != currentAmount) {
 					response.status(405);
@@ -194,19 +203,22 @@ public class GameRequest {
 				String notificationString = thisUser.getUsername() + " has sent you " + currentAmount + "!";
 				sendNotification(otherUser, notificationString);
 				
-				UsersFile.addUser(thisUser);
-				GamesFile.addGame(currentGame);
+				usersFile.addUser(thisUser);
+				gamesFile.addGame(currentGame);
 			}
 			else {
 				//Game is over
-				GamesFile.addGame(currentGame);
+				gamesFile.addGame(currentGame);
 				thisUser.addToBankAmount(currentGame.getCurrentAmount());
 				
 				String notificationString = thisUser.getUsername() + " has decided to keep the " + currentAmount + " bucks";
 				sendNotification(otherUser, notificationString);
 				
-				UsersFile.addUser(thisUser);
+				usersFile.addUser(thisUser);
 			}
+			
+			usersFile.save();
+			gamesFile.save();
 			
 			response.status(200);
 			response.body(Integer.toString(response.status()));

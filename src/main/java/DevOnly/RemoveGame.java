@@ -17,15 +17,21 @@ public class RemoveGame {
 	
 	public RemoveGame(String gameID) throws IOException{
 		Game game = new Game(gameID);
+		UsersFile usersFile = new UsersFile();
+		GamesFile gamesFile = new GamesFile();
 		
-		String[] userTokens = UsersFile.getAllUserIDs();
+		String[] userTokens = usersFile.getAllUserIDs();
 		
 		for(String token : userTokens){
 			User user = new User(token);
 			System.out.println(user.getUsername() + " has game? " + user.getGamesList().remove(game));
+			usersFile.addUser(user);
 		}
 		
-		GamesFile.removeGame(game);
+		usersFile.save();
+		
+		gamesFile.removeGame(game);
+		gamesFile.save();
 		
 	}
 }
