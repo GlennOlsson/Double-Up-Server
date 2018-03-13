@@ -1,18 +1,11 @@
-import APNs.API.Notification.Constants;
-import Backend.FileHandling;
+import Server.Constants;
+import Server.Backend.FileHandling;
 import APNs.API.Notification.Notification;
 import APNs.API.Notification.NotificationClient;
-import Backend.JSON;
-import Backend.Logger;
-import Game.Models.Game;
-import Game.Models.Token;
-import Game.Models.User;
-import Game.Models.UsersFile;
-import Spark.GameRequest;
-import Spark.HTTPListener;
-import com.google.gson.JsonNull;
+import Server.Game.Models.GamesFile;
+import Server.Game.Models.User;
+import Server.Game.Models.UsersFile;
 import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
 import com.turo.pushy.apns.ApnsClient;
 import com.turo.pushy.apns.ApnsClientBuilder;
 import com.turo.pushy.apns.PushNotificationResponse;
@@ -22,16 +15,9 @@ import com.turo.pushy.apns.util.TokenUtil;
 import com.turo.pushy.apns.util.concurrent.PushNotificationFuture;
 
 import java.io.File;
-import java.io.FileReader;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
-import static Backend.JSON.*;
-import static Game.Models.Token.*;
+import static Server.Backend.JSON.*;
 
 public class Test {
 	
@@ -53,6 +39,25 @@ public class Test {
 		Constants.CERT_PATH = certPath;
 		Constants.APP_BUNDLE = appBundle;
 		
+		Constants.GAMES_FILE = new GamesFile();
+		Constants.USERS_FILE = new UsersFile();
+		
+		UsersFile file = new UsersFile();
+		
+		String[] userIDs = file.getAllUserIDs();
+		
+		for(String ID : userIDs){
+			User user = Constants.USERS_FILE.getUser(ID);
+			
+			user.sortGamesList();
+			
+			System.out.println("Sorted " + user.getUsername());
+			
+			file.addUser(user);
+		}
+		
+		file.save();
+		
 //		new HTTPListener();
 
 //		UsersFile file = new UsersFile();
@@ -60,25 +65,23 @@ public class Test {
 //		User user = new User("TOKEN1");
 //		file.addUser(user);
 //		file.save();
-		
-		System.out.println(FileHandling.getContentOfFileAsJSON(FileHandling.File.Games));
-		
-		
-		
-//		String dateString = "08/03 - 2018 -- 15:51:22";
-//		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM - YYYY -- HH:mm:ss", Locale.getDefault());
-//		ParsePosition pp1 = new ParsePosition(0);
-//		Date date = simpleDateFormat.parse(dateString, pp1);
+//
+//		System.out.println(FileHandling.getContentOfFileAsJSON(FileHandling.File.Games));
+//
+//		String lastLoginString = "01/03 - 2018 -- 15:51:22";
+//		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.DATE_PATTERN, Locale.getDefault());
+//		Date lastLogin = simpleDateFormat.parse(lastLoginString);
 //
 //		Calendar oneWeekAgo = Calendar.getInstance();
 //		oneWeekAgo.setTime(new Date());
 //
 //		oneWeekAgo.add(Calendar.DATE, -7);
 //
-//		System.out.println(simpleDateFormat.format(oneWeekAgo.getTime()));
-//		System.out.println(simpleDateFormat.format(date));
+//		System.out.println("One week ago: " + simpleDateFormat.format(oneWeekAgo.getTime()));
+//		System.out.println("Last login: " + simpleDateFormat.format(lastLogin));
 //
-//		System.out.println(oneWeekAgo.before(date));
+//		System.out.println();
+//		System.out.println("Last login is over a week ago: " + lastLogin.before(oneWeekAgo.getTime()));
 		
 	}
 	

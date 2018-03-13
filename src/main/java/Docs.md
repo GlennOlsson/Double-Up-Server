@@ -173,7 +173,7 @@ Not user of tokens turn
 Did not double, cannot accept
 
 ### 406
-Game is already over
+Server.Game is already over
 
 ### 407
 User does not have enough founds
@@ -199,16 +199,13 @@ IOException on server
 
 ## /gameInfo/:id
 ### 200
-Game info has successfully been returned
+Server.Game info has successfully been returned
 
 ### 401
 No game with that id
 
 ### 500
 General exception on server
-
-### 501
-IOException on server
 
 ## /games/:token
 ### 200
@@ -220,9 +217,6 @@ No user with that token
 ### 500
 General exception on server
 
-### 501
-IOException on server
-
 ## /userInfo/:token
 ### 200
 User info was successfully returned
@@ -232,6 +226,3 @@ No user with that token
 
 ### 500
 General exception on server
-
-### 501
-IOException on server

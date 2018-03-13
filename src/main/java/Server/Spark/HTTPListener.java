@@ -1,19 +1,10 @@
-package Spark;
+package Server.Spark;
 
-import Backend.FileHandling;
-import Backend.JSON;
-import Backend.Logger;
-import Game.Models.User;
-import com.google.gson.JsonNull;
+import Server.Backend.JSON;
+import Server.Backend.Logger;
 import com.google.gson.JsonObject;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-
-import java.io.IOException;
 
 import static spark.Spark.*;
-import static Backend.JSON.*;
 
 public class HTTPListener {
 	

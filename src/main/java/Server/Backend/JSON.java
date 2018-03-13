@@ -1,4 +1,4 @@
-package Backend;
+package Server.Backend;
 
 import com.google.gson.*;
 

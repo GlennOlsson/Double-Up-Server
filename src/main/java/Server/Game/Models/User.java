@@ -1,19 +1,19 @@
-package Game.Models;
+package Server.Game.Models;
 
-import Backend.FileHandling;
-import Backend.JSON;
-import Backend.Logger;
+import Server.Constants;
+import Server.Backend.JSON;
+import Server.Backend.Logger;
+import Server.Backend.QuickSort.QuickSort;
+import Server.Exceptions.NoSuchGameException;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import static Backend.JSON.*;
-import static Game.Models.Token.*;
+import static Server.Backend.JSON.*;
+import static Server.Game.Models.Token.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
 import java.util.Set;
 
 @SuppressWarnings("CanBeFinal")
@@ -32,29 +32,11 @@ public class User {
 	
 	private String newToken;
 	
-	JsonArray gamesArray;
+	private JsonArray gamesArray;
 	
 	private String userToken;
 	
-	public User(String token){
-		try{
-			userToken = token;
-			
-			JsonObject userFileJSON = FileHandling.getContentOfFileAsJSON(FileHandling.File.Users);
-			
-			JsonObject usersObject = userFileJSON.getAsJsonObject(USERS_LIST_KEY);
-			
-			JsonObject thisUserObject = usersObject.getAsJsonObject(userToken);
-			thisUserObject.addProperty(TOKEN_KEY, userToken);
-			
-			assignFieldsFromJSON(thisUserObject);
-		}
-		catch (IOException e){
-			e.printStackTrace();
-		}
-	}
-	
-	private User(JsonObject jsonObject){
+	public User(JsonObject jsonObject){
 		assignFieldsFromJSON(jsonObject);
 	}
 	
@@ -69,7 +51,7 @@ public class User {
 		}
 		
 		createDate = jsonObject.get(CREATE_DATE_KEY).getAsString();
-
+		
 		startCount = jsonObject.get(AMOUNT_OF_STARTS_KEY).getAsInt();
 		lastLoginDate = jsonObject.get(LAST_LOGIN_DATE_KEY).getAsString();
 		
@@ -135,6 +117,15 @@ public class User {
 		this.bankAmount = bankAmount;
 	}
 	
+	public void sortGamesList(){
+		ArrayList<Game> games = getGamesList();
+		QuickSort<Game> quickSorter = new QuickSort<>();
+		
+		quickSorter.sort(games);
+		
+		setGamesList(games);
+	}
+	
 	/**
 	 *
 	 * @param toAdd be negative to subtract
@@ -149,19 +140,32 @@ public class User {
 	
 	public ArrayList<Game> getGamesList() {
 		String gameID = "";
-		try{
-			gamesList = new ArrayList<Game>();
+		gamesList = new ArrayList<>();
+		
+		for(JsonElement jsonElement : gamesArray){
+			gameID = jsonElement.getAsString();
 			
-			for(JsonElement jsonElement : gamesArray){
-				gameID = jsonElement.getAsString();
-				gamesList.add(new Game(gameID));
+			try{
+				Game game = Constants.GAMES_FILE.getGame(gameID);
+				gamesList.add(game);
 			}
-		}
-		catch (Exception e){
-			Logger.logError(e, "in getGamesList", "Probable cause is that there is no game with said ID. (" + gameID + ")");
+			catch (NoSuchGameException e){
+				System.out.println("No game with id " + gameID + " but no error thrown");
+			}
 		}
 		
 		return gamesList;
+	}
+	
+	public void setGamesList(ArrayList<Game> gamesList) {
+		JsonArray newJsonArray = new JsonArray();
+		
+		for(Game game : gamesList){
+			newJsonArray.add(game.getID());
+		}
+		
+		this.gamesList = gamesList;
+		this.gamesArray = newJsonArray;
 	}
 	
 	public void addGame(String id){
@@ -234,38 +238,6 @@ public class User {
 		User newUser = new User(newUserObject);
 		
 		return newUser;
-	}
-	
-	public static boolean doesUserExistWithUsername(String username) throws IOException{
-		return getUserWithUsername(username) != null;
-	}
-	
-	public static User getUserWithUsername(String username) throws IOException{
-		JsonObject usersFile = FileHandling.getContentOfFileAsJSON(FileHandling.File.Users);
-		JsonObject usersObject = usersFile.getAsJsonObject(USERS_LIST_KEY);
-		
-		String[] userTokens = usersObject.keySet().toArray(new String[0]);
-		
-		for(String token : userTokens){
-			
-			User userOfToken = new User(token);
-			
-			if(username.toLowerCase().equals(userOfToken.getUsername().toLowerCase())){
-				//Username exists
-				return userOfToken;
-			}
-		}
-		return null;
-	}
-	
-	public static boolean doesUserExistWithToken(String token) throws IOException{
-		JsonObject usersFile = FileHandling.getContentOfFileAsJSON(FileHandling.File.Users);
-		
-		JsonObject usersObject = usersFile.getAsJsonObject(USERS_LIST_KEY);
-		
-		Set<String> userIdSet = usersObject.keySet();
-		
-		return userIdSet.contains(token);
 	}
 	
 	public boolean equals(User otherUser) {

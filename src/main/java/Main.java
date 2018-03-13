@@ -1,15 +1,17 @@
 import APNs.API.Exception.CertNotSetException;
-import APNs.API.Notification.Constants;
+import Server.Constants;
 import APNs.API.Notification.Notification;
 import APNs.API.Notification.NotificationClient;
-import Backend.FileHandling;
-import Backend.Logger;
-import Spark.HTTPListener;
+import Server.Backend.FileHandling;
+import Server.Backend.Logger;
+import Server.Game.Models.GamesFile;
+import Server.Game.Models.UsersFile;
+import Server.Spark.HTTPListener;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
 
-import static Backend.JSON.*;
+import static Server.Backend.JSON.*;
 
 public class Main {
 	private static String certPassword;
@@ -24,12 +26,15 @@ public class Main {
 		Constants.CERT_PATH = certPath;
 		Constants.APP_BUNDLE = appBundle;
 		
+		Constants.GAMES_FILE = new GamesFile();
+		Constants.USERS_FILE = new UsersFile();
+		
 		Logger.print("      Starting - " + Logger.getDate());
 		
 		new HTTPListener();
 		
 		try{
-			Constants.notificationClient = new NotificationClient();
+			Constants.NOTIFICATION_CLIENT = new NotificationClient();
 		}
 		catch (Exception e){
 			Logger.logError(e, "Could not create a notification client", "General exception");
@@ -40,7 +45,7 @@ public class Main {
 			notification.setTitle("Server is up and running again!");
 			notification.setBody("The reset was a success");
 			
-			Constants.notificationClient.sendPushNotification(notification);
+			Constants.NOTIFICATION_CLIENT.sendPushNotification(notification);
 		}
 		catch (Exception e){
 			Logger.logError(e, "Could not send notifiation to Dev", "Unknown reason");

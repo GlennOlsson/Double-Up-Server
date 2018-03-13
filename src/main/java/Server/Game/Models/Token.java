@@ -1,6 +1,5 @@
-package Game.Models;
+package Server.Game.Models;
 
-import java.util.Base64;
 import java.util.Random;
 
 public class Token {

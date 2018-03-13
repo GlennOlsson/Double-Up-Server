@@ -1,17 +1,11 @@
-package Spark;
+package Server.Spark;
 
-import Backend.FileHandling;
-import Backend.JSON;
-import Game.Models.User;
+import Server.Backend.FileHandling;
+import Server.Backend.JSON;
 import com.google.gson.JsonObject;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.ProtocolVersion;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -92,6 +86,9 @@ public class HTTPListenerTest {
 	
 	@Test
 	public void playOnGameWorksBackAndForth(){
+		
+		long nano = System.nanoTime();
+		
 		String liveGameID = "PVW6UkF1s51D6qO";
 
 		JsonObject putObject = new JsonObject();
@@ -113,7 +110,9 @@ public class HTTPListenerTest {
 		putObject.addProperty(JSON.DID_DOUBLE_KEY, false);
 		putObject.addProperty(JSON.GAME_ID_KEY, liveGameID);
 		putObject.addProperty(JSON.CURRENT_AMOUNT_KEY, 80);
-
+		
+		System.out.println("Nanotime: " + (System.nanoTime() - nano));
+		
 		assertEquals(200, POST("/playGame", putObject));
 	}
 

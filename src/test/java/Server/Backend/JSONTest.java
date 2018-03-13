@@ -1,13 +1,11 @@
-package Backend;
+package Server.Backend;
 
 import com.google.gson.JsonObject;
 import org.junit.Before;
 import org.junit.Test;
 
-import static Backend.JSON.*;
-import static Backend.FileHandling.*;
-
-import static org.junit.Assert.*;
+import static Server.Backend.JSON.*;
+import static Server.Backend.FileHandling.*;
 
 public class JSONTest {
 	

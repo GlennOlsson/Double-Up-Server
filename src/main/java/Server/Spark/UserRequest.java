@@ -1,22 +1,20 @@
-package Spark;
+package Server.Spark;
 
-import Backend.FileHandling;
-import Backend.JSON;
-import Backend.Logger;
-import Game.Models.User;
-import Game.Models.UsersFile;
-import com.google.gson.JsonArray;
+import Server.Backend.JSON;
+import Server.Backend.Logger;
+import Server.Constants;
+import Server.Game.Models.User;
+import Server.Game.Models.UsersFile;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import spark.Request;
 import spark.Response;
 
 import java.io.IOException;
 
-import static Backend.JSON.*;
+import static Server.Backend.JSON.*;
 
-import static Game.Models.User.*;
+import static Server.Game.Models.User.*;
 
 public class UserRequest {
 	
@@ -26,7 +24,7 @@ public class UserRequest {
 			
 			String suppliedUsername = requestJSON.get(USERNAME_KEY).getAsString();
 			
-			if(doesUserExistWithUsername(suppliedUsername)){
+			if(Constants.USERS_FILE.doesUserExistWithUsername(suppliedUsername)){
 				response.status(401);
 				response.body(Integer.toString(response.status()));
 				return response;
@@ -72,7 +70,7 @@ public class UserRequest {
 			
 			Logger.print("User with token: " + suppliedToken + " tried to change to username " + newUsername);
 			
-			User userWithUsername = User.getUserWithUsername(newUsername);
+			User userWithUsername = Constants.USERS_FILE.getUserWithUsername(newUsername);
 			if(userWithUsername != null){
 				if(! userWithUsername.getUserToken().equals(suppliedToken)) {
 					Logger.print("Not allowed!");
@@ -83,7 +81,7 @@ public class UserRequest {
 				//Else is same user, can set new username as it might change case
 			}
 			
-			User thisUser = new User(suppliedToken);
+			User thisUser = Constants.USERS_FILE.getUser(suppliedToken);
 			thisUser.setUsername(newUsername);
 			
 			UsersFile usersFile = new UsersFile();
@@ -112,7 +110,7 @@ public class UserRequest {
 			
 			String userToken = requestJSON.get(TOKEN_KEY).getAsString();
 			
-			User thisUser = new User(userToken);
+			User thisUser =  Constants.USERS_FILE.getUser(userToken);
 			
 			JsonElement notificationToken = requestJSON.get(NOTIFICATION_TOKEN_KEY);
 			
@@ -166,12 +164,12 @@ public class UserRequest {
 	public static Response getUserInfo(Request request, Response response){
 		try{
 			String userToken = request.params(":token");
-			if(! User.doesUserExistWithToken(userToken)){
+			if(! Constants.USERS_FILE.doesUserExistWithToken(userToken)){
 				response.status(401);
 				response.body(Integer.toString(response.status()));
 				return response;
 			}
-			User thisUser = new User(userToken);
+			User thisUser =  Constants.USERS_FILE.getUser(userToken);
 			
 			JsonObject responseObject = new JsonObject();
 			responseObject.addProperty(USERNAME_KEY, thisUser.getUsername());
@@ -180,11 +178,6 @@ public class UserRequest {
 			response.status(200);
 			response.body(JSON.beautifyJSON(responseObject));
 			
-		}
-		catch (IOException e){
-			e.printStackTrace();
-			response.status(501);
-			response.body(Integer.toString(response.status()));
 		}
 		catch (Exception e){
 			e.printStackTrace();

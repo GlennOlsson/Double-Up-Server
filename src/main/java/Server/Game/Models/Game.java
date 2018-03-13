@@ -1,20 +1,22 @@
-package Game.Models;
+package Server.Game.Models;
 
-import Backend.FileHandling;
-import Backend.JSON;
-import Backend.Logger;
+import Server.Backend.JSON;
+import Server.Backend.Logger;
+import Server.Constants;
+import Server.Exceptions.NoSuchUserException;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import static Backend.JSON.*;
-import static Game.Models.Token.*;
+import static Server.Backend.JSON.*;
+import static Server.Game.Models.Token.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Set;
 
-public class Game{
+public class Game implements Comparable<Game>{
 	
 	private ArrayList<User> usersList;
 	
@@ -29,25 +31,8 @@ public class Game{
 	private String ID;
 	
 	
-	private Game(JsonObject jsonObject){
+	public Game(JsonObject jsonObject){
 		assignFieldsFromJSON(jsonObject);
-	}
-	
-	public Game(String ID) throws IOException{
-		try{
-			JsonObject gameFileJSON = FileHandling.getContentOfFileAsJSON(FileHandling.File.Games);
-			JsonObject gamesObject = gameFileJSON.getAsJsonObject(GAMES_LIST_KEY);
-			
-			JsonObject thisGameObject = gamesObject.getAsJsonObject(ID);
-			
-			thisGameObject.addProperty(ID_KEY, ID);
-			
-			assignFieldsFromJSON(thisGameObject);
-			
-		}
-		catch (IOException e){
-			Logger.logError(e, "Error in Game constructor", "ID: " + ID);
-		}
 	}
 	
 	private Game(){
@@ -82,6 +67,17 @@ public class Game{
 		return isOver;
 	}
 	
+	public Date getLastPlay() {
+		Date lastPlayDate = null;
+		try{
+			lastPlayDate = Logger.parseDate(lastPlay);
+		}
+		catch (Exception e){
+			Logger.logError(e, "Error in getLastPLay()", "Error with parsing date, returning null");
+		}
+		return lastPlayDate;
+	}
+	
 	public void setOver(boolean over) {
 		isOver = over;
 	}
@@ -95,7 +91,13 @@ public class Game{
 		
 		for(JsonElement jsonElement : usersArray){
 			String userToken = jsonElement.getAsString();
-			usersList.add(new User(userToken));
+			
+			try{
+				usersList.add(Constants.USERS_FILE.getUser(userToken));
+			}
+			catch (NoSuchUserException e){
+				System.out.println("No user with token " + userToken + " but no error thrown");
+			}
 		}
 		
 		return usersList;
@@ -162,16 +164,12 @@ public class Game{
 		return newGame;
 	}
 	
-	public static boolean hasGameWithID(String id) throws IOException{
-		JsonObject gamesFile = FileHandling.getContentOfFileAsJSON(FileHandling.File.Games);
-		JsonObject gamesObject = gamesFile.getAsJsonObject(GAMES_LIST_KEY);
-		
-		Set<String> gameIDSet = gamesObject.keySet();
-		
-		return gameIDSet.contains(id);
-	}
-	
 	public boolean equals(Game otherGame) {
 		return ID.equals(otherGame.getID());
+	}
+	
+	@Override
+	public int compareTo(Game o){
+		return getLastPlay().compareTo(o.getLastPlay());
 	}
 }

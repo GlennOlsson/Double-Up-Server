@@ -1,28 +1,27 @@
-package Spark;
+package Server.Spark;
 
 import APNs.API.Exception.CertNotSetException;
-import APNs.API.Notification.Constants;
+import Server.Constants;
 import APNs.API.Notification.Notification;
-import APNs.API.Notification.NotificationClient;
-import Backend.FileHandling;
-import Backend.JSON;
-import Backend.Logger;
-import Game.Models.*;
+import Server.Backend.FileHandling;
+import Server.Backend.JSON;
+import Server.Backend.Logger;
+import Server.Exceptions.NoSuchGameException;
+import Server.Exceptions.NoSuchUserException;
+import Server.Game.Models.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import spark.Request;
 import spark.Response;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-import static Backend.JSON.*;
+import static Server.Backend.JSON.*;
 
 
 public class GameRequest {
@@ -32,13 +31,13 @@ public class GameRequest {
 			
 			String token = requestJSON.get(TOKEN_KEY).getAsString();
 			
-			User thisUser = new User(token);
+			User thisUser = Constants.USERS_FILE.getUser(token);
 			
 			User opponentUser = null;
 			if(requestJSON.has(REQUESTED_USER_KEY) && ! requestJSON.get(REQUESTED_USER_KEY).isJsonNull()){
 				String requestedOpponentUsername = requestJSON.get(REQUESTED_USER_KEY).getAsString();
 				
-				opponentUser = User.getUserWithUsername(requestedOpponentUsername);
+				opponentUser = Constants.USERS_FILE.getUserWithUsername(requestedOpponentUsername);
 				
 				if(opponentUser == null){
 					response.status(401);
@@ -69,7 +68,7 @@ public class GameRequest {
 					}
 				}
 				//We now have a opponent username for sure
-				opponentUser = User.getUserWithUsername(opponentUsername);
+				opponentUser = Constants.USERS_FILE.getUserWithUsername(opponentUsername);
 			}
 			
 			int startAmount = requestJSON.get(START_AMOUNT_KEY).getAsInt();
@@ -130,9 +129,9 @@ public class GameRequest {
 			
 			Game currentGame = null;
 			try{
-				currentGame = new Game(gameID);
+				currentGame = Constants.GAMES_FILE.getGame(gameID);
 			}
-			catch (NullPointerException e){
+			catch (NoSuchGameException e){
 				Logger.print("No game with id: " + gameID + ", returning 401");
 				
 				response.status(401);
@@ -142,7 +141,7 @@ public class GameRequest {
 			//Current game can't be null now
 			ArrayList<User> usersInGame = currentGame.getUsersList();
 			
-			User thisUser = new User(token);
+			User thisUser = Constants.USERS_FILE.getUser(token);
 			User otherUser = ! usersInGame.get(0).getUserToken().equals(token) ? usersInGame.get(0) : usersInGame.get(1);
 			
 			if(!usersInGame.get(0).getUserToken().equals(token) && !usersInGame.get(1).getUserToken().equals(token)) {
@@ -207,7 +206,7 @@ public class GameRequest {
 				gamesFile.addGame(currentGame);
 			}
 			else {
-				//Game is over
+				//Server.Game is over
 				gamesFile.addGame(currentGame);
 				thisUser.addToBankAmount(currentGame.getCurrentAmount());
 				
@@ -241,28 +240,31 @@ public class GameRequest {
 		try{
 			String boardID = request.params(":gameID");
 			
-			if(!Game.hasGameWithID(boardID)){
+			if(!Constants.GAMES_FILE.gameWithIdExists(boardID)){
 				response.status(401);
 				response.body(Integer.toString(response.status()));
 				return response;
 			}
 			
-			Game thisGame = new Game(boardID);
+			Game thisGame = Constants.GAMES_FILE.getGame(boardID);
 			
 			JsonObject gameAsObject = thisGame.asJson();
 			JsonArray userTokensArray = gameAsObject.getAsJsonArray(USERS_LIST_KEY);
 			
-			User user1 = new User(userTokensArray.get(0).getAsString());
+			User user1 = Constants.USERS_FILE.getUser(userTokensArray.get(0).getAsString());
 			JsonElement user1Name = JSON.parseStringToJSONElement(user1.getUsername());
 			
-			User user2 = new User(userTokensArray.get(1).getAsString());
+			User user2 = Constants.USERS_FILE.getUser(userTokensArray.get(1).getAsString());
 			JsonElement user2Name = JSON.parseStringToJSONElement(user2.getUsername());
 			
 			userTokensArray.set(0, user1Name);
 			userTokensArray.set(1, user2Name);
 			
 			String tokenOfTurn = gameAsObject.get(TURN_KEY).getAsString();
-			String usernameOfTurn = new User(tokenOfTurn).getUsername();
+			
+			User userOfTurn = tokenOfTurn.equals(user1.getUserToken()) ? user1 : user2;
+			
+			String usernameOfTurn = userOfTurn.getUsername();
 			
 			gameAsObject.addProperty(TURN_KEY, usernameOfTurn);
 			
@@ -271,11 +273,6 @@ public class GameRequest {
 			response.body(JSON.beautifyJSON(gameAsObject));
 			response.status(200);
 			
-		}
-		catch (IOException e){
-			Logger.logError(e, "IOException in gameInfo", "/gameInfo");
-			response.status(501);
-			response.body(Integer.toString(response.status()));
 		}
 		catch (Exception e){
 			Logger.logError(e, "General exception in gameInfo", "/gameInfo");
@@ -289,13 +286,13 @@ public class GameRequest {
 		try{
 			String userToken = request.params(":token");
 			
-			if(! User.doesUserExistWithToken(userToken)){
+			if(! Constants.USERS_FILE.doesUserExistWithToken(userToken)){
 				response.status(401);
 				response.body(Integer.toString(response.status()));
 				return response;
 			}
 			
-			User thisUser = new User(userToken);
+			User thisUser = Constants.USERS_FILE.getUser(userToken);
 			
 			ArrayList<Game> gamesList = thisUser.getGamesList();
 			
@@ -319,11 +316,6 @@ public class GameRequest {
 			response.status(200);
 			
 		}
-		catch (IOException e){
-			Logger.logError(e, "IOException in /games/:token", "/games/:token");
-			response.status(501);
-			response.body(Integer.toString(response.status()));
-		}
 		catch (Exception e){
 			Logger.logError(e, "General exception in /games/:token", "/games/:token");
 			response.status(500);
@@ -345,7 +337,7 @@ public class GameRequest {
 				newGameNotification.setBadgeNumber(1);
 				newGameNotification.setSoundPath("NotificationSound.m4a");
 				
-				boolean accepted = Constants.notificationClient.sendPushNotification(newGameNotification);
+				boolean accepted = Constants.NOTIFICATION_CLIENT.sendPushNotification(newGameNotification);
 				
 				Logger.print("Sent notification to " + userToSend.getUsername() + " ? " + accepted);
 			}
@@ -360,7 +352,7 @@ public class GameRequest {
 		}
 	}
 	
-	private static User getRandomUser() throws IOException{
+	private static User getRandomUser() throws IOException, NoSuchUserException{
 		JsonObject userFileObject = FileHandling.getContentOfFileAsJSON(FileHandling.File.Users);
 		JsonObject userObject = userFileObject.getAsJsonObject(USERS_LIST_KEY);
 		
@@ -370,7 +362,7 @@ public class GameRequest {
 		String[] arrayOfTokens = setOfTokens.toArray(new String[]{});
 		
 		String randomToken = arrayOfTokens[randomIndex];
-		User thisUser = new User(randomToken);
+		User thisUser = Constants.USERS_FILE.getUser(randomToken);
 		
 		if(thisUser.isTestUser()){
 			return getRandomUser();

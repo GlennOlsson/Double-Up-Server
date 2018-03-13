@@ -26,7 +26,9 @@
  *
  */
 
-package Backend;
+package Server.Backend;
+
+import Server.Constants;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -35,8 +37,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class Logger {
 	
@@ -116,10 +121,22 @@ public class Logger {
 	
 	public static String getDate(){
 		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM - YYYY -- HH:mm:ss");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.DATE_PATTERN);
 		String currentTime = simpleDateFormat.format(cal.getTime());
 		
 		return currentTime;
+	}
+	
+	/**
+	 * Parse a string as a Date object
+	 * @param dateString must be in Constants.DATE_PATTERN pattern
+	 * @return a date object representing the time
+	 */
+	public static Date parseDate(String dateString) throws ParseException{
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.DATE_PATTERN, Locale.getDefault());
+		Date parsedDate = simpleDateFormat.parse(dateString);
+		
+		return parsedDate;
 	}
 	
 	private static boolean isLinux(){

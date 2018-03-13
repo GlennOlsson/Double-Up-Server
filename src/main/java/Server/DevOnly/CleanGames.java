@@ -1,10 +1,13 @@
-package DevOnly;
+package Server.DevOnly;
 
-import Game.Models.Game;
-import Game.Models.User;
-import Game.Models.UsersFile;
+import Server.Constants;
+import Server.Exceptions.NoSuchGameException;
+import Server.Exceptions.NoSuchUserException;
+import Server.Game.Models.Game;
+import Server.Game.Models.GamesFile;
+import Server.Game.Models.User;
+import Server.Game.Models.UsersFile;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 
 import java.io.IOException;
 
@@ -12,24 +15,25 @@ import java.io.IOException;
  * Remove all game-id strings in the users that do not exist (anymore)
  */
 public class CleanGames {
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException, NoSuchUserException{
 	    new CleanGames();
 	}
 	
-	public CleanGames() throws IOException{
+	public CleanGames() throws IOException, NoSuchUserException{
 		UsersFile usersFile = new UsersFile();
+		GamesFile gamesFile = new GamesFile();
 		String[] allUserIDs = usersFile.getAllUserIDs();
 		
 		for(String userID : allUserIDs){
-			User user = new User(userID);
+			User user = Constants.USERS_FILE.getUser(userID);
 			
 			JsonArray gamesOfUser = user.getGamesAsJSONArray();
 			for(int i = 0; i < gamesOfUser.size(); i++){
 				String gameID = gamesOfUser.get(i).getAsString();
 				try{
-				    Game game = new Game(gameID);
+				    Game game = gamesFile.getGame(gameID);
 				}
-				catch (NullPointerException e){
+				catch (NoSuchGameException e){
 					System.out.println("No game with ID " + gameID);
 					gamesOfUser.remove(i);
 				}

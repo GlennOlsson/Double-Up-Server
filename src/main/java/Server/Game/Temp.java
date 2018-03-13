@@ -1,18 +1,7 @@
-package Game;
+package Server.Game;
 
-import Backend.FileHandling;
-import Backend.JSON;
-import Backend.Logger;
-import com.google.gson.*;
-import spark.Response;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Random;
-
-//import static Backend.FileHandling.USERS_FILE;
-import static Backend.FileHandling.saveToFile;
+//import static Server.Backend.FileHandling.USERS_FILE;
+import static Server.Backend.FileHandling.saveToFile;
 
 public class Temp {
 	
