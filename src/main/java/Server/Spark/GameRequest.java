@@ -77,11 +77,11 @@ public class GameRequest {
 			
 			Game thisGame = Game.createNewGame(userTokens, opponentUser.getUserToken(), startAmount);
 			
-			GamesFile gamesFile = new GamesFile();
+			GamesFile gamesFile = Constants.GAMES_FILE;
 			gamesFile.addGame(thisGame);
 			gamesFile.save();
 			
-			UsersFile usersFile = new UsersFile();
+			UsersFile usersFile = Constants.USERS_FILE;
 			
 			thisUser.addGame(thisGame.getID());
 			thisUser.addToBankAmount(-startAmount);
@@ -177,9 +177,6 @@ public class GameRequest {
 			currentGame.setOver(! didDouble);
 			currentGame.newPlay();
 			
-			UsersFile usersFile = new UsersFile();
-			GamesFile gamesFile = new GamesFile();
-			
 			if(didDouble){
 				if(currentGame.getCurrentAmount() * 2 != currentAmount) {
 					response.status(405);
@@ -202,22 +199,22 @@ public class GameRequest {
 				String notificationString = thisUser.getUsername() + " has sent you " + currentAmount + "!";
 				sendNotification(otherUser, notificationString);
 				
-				usersFile.addUser(thisUser);
-				gamesFile.addGame(currentGame);
+				Constants.USERS_FILE.addUser(thisUser);
+				Constants.GAMES_FILE.addGame(currentGame);
 			}
 			else {
 				//Server.Game is over
-				gamesFile.addGame(currentGame);
+				Constants.GAMES_FILE.addGame(currentGame);
 				thisUser.addToBankAmount(currentGame.getCurrentAmount());
 				
 				String notificationString = thisUser.getUsername() + " has decided to keep the " + currentAmount + " bucks";
 				sendNotification(otherUser, notificationString);
 				
-				usersFile.addUser(thisUser);
+				Constants.USERS_FILE.addUser(thisUser);
 			}
 			
-			usersFile.save();
-			gamesFile.save();
+			Constants.USERS_FILE.save();
+			Constants.GAMES_FILE.save();
 			
 			response.status(200);
 			response.body(Integer.toString(response.status()));

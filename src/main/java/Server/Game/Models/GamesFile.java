@@ -1,6 +1,7 @@
 package Server.Game.Models;
 
 import Server.Backend.FileHandling;
+import Server.Constants;
 import Server.Exceptions.NoSuchGameException;
 import Server.Exceptions.NoSuchUserException;
 import com.google.gson.JsonElement;
@@ -51,7 +52,7 @@ public class GamesFile {
 		
 		gamesListObject.add(game.getID(), game.asJson());
 		
-		UsersFile usersFile = new UsersFile();
+		UsersFile usersFile = Constants.USERS_FILE;
 		
 		usersFile.addGameToUser(game.getUsersList().get(0).getUserToken(), game.getID());
 		usersFile.addGameToUser(game.getUsersList().get(1).getUserToken(), game.getID());

@@ -2,6 +2,7 @@ import Server.Constants;
 import Server.Backend.FileHandling;
 import APNs.API.Notification.Notification;
 import APNs.API.Notification.NotificationClient;
+import Server.Game.Models.Game;
 import Server.Game.Models.GamesFile;
 import Server.Game.Models.User;
 import Server.Game.Models.UsersFile;
@@ -42,21 +43,13 @@ public class Test {
 		Constants.GAMES_FILE = new GamesFile();
 		Constants.USERS_FILE = new UsersFile();
 		
-		UsersFile file = new UsersFile();
+		Game game = Constants.GAMES_FILE.getGame("GameID1");
+		System.out.println(game.isOver());
+		game.setOver(false);
+		Constants.GAMES_FILE.addGame(game);
+		Constants.GAMES_FILE.save();
 		
-		String[] userIDs = file.getAllUserIDs();
-		
-		for(String ID : userIDs){
-			User user = Constants.USERS_FILE.getUser(ID);
-			
-			user.sortGamesList();
-			
-			System.out.println("Sorted " + user.getUsername());
-			
-			file.addUser(user);
-		}
-		
-		file.save();
+		System.out.println(Constants.GAMES_FILE.getGame("GameID1").isOver());
 		
 //		new HTTPListener();
 

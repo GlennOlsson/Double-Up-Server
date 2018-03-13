@@ -37,7 +37,7 @@ public class UserRequest {
 			
 			User newUser = User.createNewUser(suppliedUsername, suppliedNotificationToken);
 			
-			UsersFile usersFile = new UsersFile();
+			UsersFile usersFile = Constants.USERS_FILE;
 			usersFile.addUser(newUser);
 			usersFile.save();
 			
@@ -84,7 +84,7 @@ public class UserRequest {
 			User thisUser = Constants.USERS_FILE.getUser(suppliedToken);
 			thisUser.setUsername(newUsername);
 			
-			UsersFile usersFile = new UsersFile();
+			UsersFile usersFile = Constants.USERS_FILE;
 			usersFile.addUser(thisUser);
 			usersFile.save();
 			
@@ -138,7 +138,7 @@ public class UserRequest {
 			
 			thisUser.newStart();
 			
-			UsersFile usersFile = new UsersFile();
+			UsersFile usersFile = Constants.USERS_FILE;
 			
 			usersFile.addUser(thisUser);
 			usersFile.save();
