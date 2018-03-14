@@ -47,7 +47,12 @@ public class User {
 		
 		if(jsonObject.has(NOTIFICATION_TOKEN_KEY)){
 			//Otherwise, notifications has not been allowed by client
-			notificationToken = jsonObject.get(NOTIFICATION_TOKEN_KEY).getAsString();
+			if(!jsonObject.get(NOTIFICATION_TOKEN_KEY).isJsonNull()) {
+				notificationToken = jsonObject.get(NOTIFICATION_TOKEN_KEY).getAsString();
+			}
+			else{
+				System.out.println("Notification token for " + username + " is JsonNull!!");
+			}
 		}
 		
 		createDate = jsonObject.get(CREATE_DATE_KEY).getAsString();
@@ -56,21 +61,37 @@ public class User {
 		lastLoginDate = jsonObject.get(LAST_LOGIN_DATE_KEY).getAsString();
 		
 		if(jsonObject.has(IS_TEST_USER_KEY)){
-			isTestUser = jsonObject.get(IS_TEST_USER_KEY).getAsBoolean();
+			if(!jsonObject.get(IS_TEST_USER_KEY).isJsonNull()) {
+				isTestUser = jsonObject.get(IS_TEST_USER_KEY).getAsBoolean();
+			}
+			else{
+				System.out.println("isTestUser for " + username + " is JsonNull!!");
+				isTestUser = false;
+			}
 		}
 		else{
 			isTestUser = false;
 		}
-		
 		if(jsonObject.has(VERSION_KEY)){
-			appVersion = jsonObject.get(VERSION_KEY).getAsString();
+			if(!jsonObject.get(VERSION_KEY).isJsonNull()) {
+				appVersion = jsonObject.get(VERSION_KEY).getAsString();
+			}
+			else{
+				System.out.println("Version for " + username + " is JsonNull!!");
+				appVersion = "< 1.1";
+			}
 		}
 		else{
 			appVersion = "< 1.1";
 		}
 		
 		if(jsonObject.has(NEW_TOKEN_KEY)){
-			newToken = jsonObject.get(NEW_TOKEN_KEY).getAsString();
+			if(!jsonObject.get(NEW_TOKEN_KEY).isJsonNull()) {
+				newToken = jsonObject.get(NEW_TOKEN_KEY).getAsString();
+			}
+			else{
+				System.out.println("New Token for " + username + " is JsonNull!!");
+			}
 		}
 		
 		userToken = jsonObject.get(TOKEN_KEY).getAsString();

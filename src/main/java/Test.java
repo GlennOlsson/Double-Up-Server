@@ -16,6 +16,10 @@ import com.turo.pushy.apns.util.TokenUtil;
 import com.turo.pushy.apns.util.concurrent.PushNotificationFuture;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import static Server.Backend.JSON.*;
@@ -40,16 +44,8 @@ public class Test {
 		Constants.CERT_PATH = certPath;
 		Constants.APP_BUNDLE = appBundle;
 		
-		Constants.GAMES_FILE = new GamesFile();
-		Constants.USERS_FILE = new UsersFile();
-		
-		Game game = Constants.GAMES_FILE.getGame("GameID1");
-		System.out.println(game.isOver());
-		game.setOver(false);
-		Constants.GAMES_FILE.addGame(game);
-		Constants.GAMES_FILE.save();
-		
-		System.out.println(Constants.GAMES_FILE.getGame("GameID1").isOver());
+//		Constants.GAMES_FILE = new GamesFile();
+//		Constants.USERS_FILE = new UsersFile();
 		
 //		new HTTPListener();
 
@@ -61,20 +57,20 @@ public class Test {
 //
 //		System.out.println(FileHandling.getContentOfFileAsJSON(FileHandling.File.Games));
 //
-//		String lastLoginString = "01/03 - 2018 -- 15:51:22";
-//		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.DATE_PATTERN, Locale.getDefault());
-//		Date lastLogin = simpleDateFormat.parse(lastLoginString);
-//
-//		Calendar oneWeekAgo = Calendar.getInstance();
-//		oneWeekAgo.setTime(new Date());
-//
-//		oneWeekAgo.add(Calendar.DATE, -7);
-//
-//		System.out.println("One week ago: " + simpleDateFormat.format(oneWeekAgo.getTime()));
-//		System.out.println("Last login: " + simpleDateFormat.format(lastLogin));
-//
-//		System.out.println();
-//		System.out.println("Last login is over a week ago: " + lastLogin.before(oneWeekAgo.getTime()));
+		String lastLoginString = "01/03 - 2018 -- 15:51:22:000";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM - yyyy -- HH:mm:ss:SSS");
+		Date lastLogin = simpleDateFormat.parse(lastLoginString);
+
+		Calendar oneWeekAgo = Calendar.getInstance();
+		oneWeekAgo.setTime(new Date());
+
+		oneWeekAgo.add(Calendar.DATE, -7);
+
+		System.out.println("One week ago: " + simpleDateFormat.format(oneWeekAgo.getTime()));
+		System.out.println("Last login: " + simpleDateFormat.format(lastLogin));
+
+		System.out.println();
+		System.out.println("Last login is over a week ago: " + lastLogin.before(oneWeekAgo.getTime()));
 		
 	}
 	
